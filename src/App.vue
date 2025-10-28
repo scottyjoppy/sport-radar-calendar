@@ -1,4 +1,6 @@
 <script setup>
+import Navbar from "@/components/Navbar.vue";
+import SquareButton from "@/components/SquareButton.vue";
 import { supabase } from "@/lib/subabaseClient";
 import { onMounted, ref } from "vue";
 
@@ -15,9 +17,13 @@ onMounted(() => {
 </script>
 
 <template>
+  <Navbar></Navbar>
   <ul>
-    <li class="hover:font-bold hover:cursor-default highlight-red" v-for="sport in sports" :key="sport.id">
+    <li v-for="sport in sports" :key="sport.id">
       {{ sport.name }}
     </li>
   </ul>
+  <div class="w-full flex justify-center">
+    <SquareButton>Find out more</SquareButton>
+  </div>
 </template>

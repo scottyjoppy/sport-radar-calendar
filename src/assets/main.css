@@ -1,1 +1,51 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+
+::selection {
+  background: rgba(254, 0, 4, 40%);
+}
+
+:root {
+  --primary: #0f1151;
+  --primary-dark: #00003c;
+  --primary-light: #1e2166;
+
+  --secondary-dark: #8e1135;
+  --secondary: #fe0004;
+
+  --off-white: #eeeeee;
+
+  --color-black: #222222;
+  font-family: "Source Sans 3", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.my-button {
+  --p: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  fill: var(--off-white);
+  color: var(--off-white);
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(var(--secondary) 0 0) calc(100% - var(--p, 0%)) /
+    var(--p, 0%) no-repeat;
+  transition: 0.4s, background-position 0s;
+  outline: none;
+}
+.my-button:hover {
+  --p: 0%;
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
+  fill: var(--secondary);
+}
+
+.nav-link {
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  cursor: pointer;
+  color: var(--secondary);
+}
