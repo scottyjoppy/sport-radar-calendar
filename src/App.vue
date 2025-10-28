@@ -1,6 +1,7 @@
 <script setup>
 import Navbar from "@/components/Navbar.vue";
 import SquareButton from "@/components/SquareButton.vue";
+import Calendar from "@/components/Calendar.vue";
 import { supabase } from "@/lib/subabaseClient";
 import { onMounted, ref } from "vue";
 
@@ -26,4 +27,5 @@ onMounted(() => {
   <div class="w-full flex justify-center">
     <SquareButton>Find out more</SquareButton>
   </div>
+  <Calendar></Calendar>
 </template>
