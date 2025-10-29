@@ -97,16 +97,16 @@ body {
 }
 
 .calendar-grid > :nth-child(1) {
-  border-top-left-radius: 1rem;
+  border-top-left-radius: 5px;
 }
 .calendar-grid > :nth-child(7) {
-  border-top-right-radius: 1rem;
+  border-top-right-radius: 5px;
 }
 .calendar-grid > :nth-last-child(1) {
-  border-bottom-right-radius: 1rem;
+  border-bottom-right-radius: 5px;
 }
 .calendar-grid > :nth-last-child(7) {
-  border-bottom-left-radius: 1rem;
+  border-bottom-left-radius: 5px;
 }
 
 .calendar-day .full {

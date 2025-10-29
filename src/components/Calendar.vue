@@ -1,7 +1,27 @@
-<script setup></script>
+<script setup>
+import { MONTHS } from "@/utils/calendar";
+import { getDayArray } from "@/utils/dateHelpers";
+import { computed, ref } from "vue";
+
+const date = ref(new Date());
+const days = computed(() => {
+  return getDayArray(date.value.getFullYear(), date.value.getMonth(), 1);
+});
+
+const upMonth = () => {
+  date.value = new Date(date.value.getFullYear(), date.value.getMonth() + 1);
+};
+const downMonth = () => {
+  date.value = new Date(date.value.getFullYear(), date.value.getMonth() - 1);
+};
+</script>
 
 <template>
   <section class="flex justify-center">
+    <div>{{ MONTHS[date.getMonth()] }}</div>
+    <div>{{ date.getFullYear() }}</div>
+    <button @click="upMonth">Up</button>
+    <button @click="downMonth">down</button>
     <div class="calendar-grid w-3/4">
       <div class="calendar-day">
         <span class="full">Monday</span>
@@ -31,41 +51,7 @@
         <span class="full">Sunday</span>
         <span class="abbr">Sun</span>
       </div>
-      <div class="calendar-cell">1</div>
-      <div class="calendar-cell">2</div>
-      <div class="calendar-cell">3</div>
-      <div class="calendar-cell">4</div>
-      <div class="calendar-cell">5</div>
-      <div class="calendar-cell">6</div>
-      <div class="calendar-cell">7</div>
-      <div class="calendar-cell">1</div>
-      <div class="calendar-cell">2</div>
-      <div class="calendar-cell">3</div>
-      <div class="calendar-cell">4</div>
-      <div class="calendar-cell">5</div>
-      <div class="calendar-cell">6</div>
-      <div class="calendar-cell">7</div>
-      <div class="calendar-cell">1</div>
-      <div class="calendar-cell">2</div>
-      <div class="calendar-cell">3</div>
-      <div class="calendar-cell">4</div>
-      <div class="calendar-cell">5</div>
-      <div class="calendar-cell">6</div>
-      <div class="calendar-cell">7</div>
-      <div class="calendar-cell">1</div>
-      <div class="calendar-cell">2</div>
-      <div class="calendar-cell">3</div>
-      <div class="calendar-cell">4</div>
-      <div class="calendar-cell">5</div>
-      <div class="calendar-cell">6</div>
-      <div class="calendar-cell">7</div>
-      <div class="calendar-cell">1</div>
-      <div class="calendar-cell">2</div>
-      <div class="calendar-cell">3</div>
-      <div class="calendar-cell">4</div>
-      <div class="calendar-cell">5</div>
-      <div class="calendar-cell">6</div>
-      <div class="calendar-cell">7</div>
+      <div v-for="day in days" class="calendar-cell">{{ day }}</div>
     </div>
   </section>
 </template>

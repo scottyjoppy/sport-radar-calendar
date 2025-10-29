@@ -1,19 +1,19 @@
 <script setup>
+import Calendar from "@/components/Calendar.vue";
 import Navbar from "@/components/Navbar.vue";
 import SquareButton from "@/components/SquareButton.vue";
-import Calendar from "@/components/Calendar.vue";
 import { supabase } from "@/lib/subabaseClient";
 import { onMounted, ref } from "vue";
 
 const sports = ref([]);
 
-async function getInstruments() {
+async function getSports() {
   const { data } = await supabase.from("sports").select();
   sports.value = data;
 }
 
 onMounted(() => {
-  getInstruments();
+  getSports();
 });
 </script>
 
