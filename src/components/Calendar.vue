@@ -8,6 +8,13 @@ const startMonday = ref(true);
 
 const date = ref(new Date());
 
+const formattedDate = computed(() => {
+  const d = date.value;
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${month}-${day}`;
+});
+
 const allDates = computed(() => {
   return getDateArray(
     date.value.getFullYear(),
@@ -41,6 +48,11 @@ const downMonth = () => {
   date.value = new Date(date.value.getFullYear(), date.value.getMonth() - 1);
 };
 const flipStart = () => (startMonday.value = !startMonday.value);
+
+const onDateChange = (e) => {
+  const [year, month, day] = e.target.value.split("-");
+  date.value = new Date(year, month - 1, day);
+};
 </script>
 
 <template>
@@ -51,6 +63,7 @@ const flipStart = () => (startMonday.value = !startMonday.value);
         <div>{{ date.getDate() }}</div>
         <div>{{ date.getFullYear() }}</div>
       </div>
+      <input type="date" :value="formattedDate" @input="onDateChange" />
       <div class="button-container">
         <button @click="flipStart" class="simple-button">flip</button>
         <button @click="upMonth" class="simple-button">up</button>
