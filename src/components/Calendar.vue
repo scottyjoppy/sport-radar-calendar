@@ -1,12 +1,38 @@
 <script setup>
-import { MONTHS } from "@/utils/calendar";
-import { getDayArray } from "@/utils/dateHelpers";
+import { offsetArray } from "@/utils/arrayHelpers";
+import { DAYS, MONTHS } from "@/utils/calendar";
+import { getDateArray } from "@/utils/dateHelpers";
 import { computed, ref } from "vue";
 
+const startMonday = ref(true);
+
 const date = ref(new Date());
-const days = computed(() => {
-  return getDayArray(date.value.getFullYear(), date.value.getMonth(), 1);
+
+const allDates = computed(() => {
+  return getDateArray(
+    date.value.getFullYear(),
+    date.value.getMonth(),
+    startMonday.value
+  );
 });
+
+const isExpandedRows = computed(() => {
+  if (
+    allDates.value.length > 35 &&
+    allDates.value[allDates.value.length - 7] > 20
+  ) {
+    console.log(allDates.value);
+    return true;
+  }
+  console.log(false);
+  return false;
+});
+
+const displayedDates = computed(() => {
+  return !isExpandedRows.value ? allDates.value.slice(0, -7) : allDates.value;
+});
+
+const days = computed(() => (startMonday.value ? offsetArray(DAYS) : DAYS));
 
 const upMonth = () => {
   date.value = new Date(date.value.getFullYear(), date.value.getMonth() + 1);
@@ -14,44 +40,44 @@ const upMonth = () => {
 const downMonth = () => {
   date.value = new Date(date.value.getFullYear(), date.value.getMonth() - 1);
 };
+const flipStart = () => (startMonday.value = !startMonday.value);
 </script>
 
 <template>
-  <section class="flex justify-center">
-    <div>{{ MONTHS[date.getMonth()] }}</div>
-    <div>{{ date.getFullYear() }}</div>
-    <button @click="upMonth">Up</button>
-    <button @click="downMonth">down</button>
-    <div class="calendar-grid w-3/4">
-      <div class="calendar-day">
-        <span class="full">Monday</span>
-        <span class="abbr">Mon</span>
+  <div class="combined-calendar-grid">
+    <section class="calendar-side-bar">
+      <div class="border-b border-(--grey) flex justify-between px-1">
+        <div>{{ MONTHS[date.getMonth()] }}</div>
+        <div>{{ date.getDate() }}</div>
+        <div>{{ date.getFullYear() }}</div>
       </div>
-      <div class="calendar-day">
-        <span class="full">Tuesday</span>
-        <span class="abbr">Tues</span>
+      <div class="button-container">
+        <button @click="flipStart" class="simple-button">flip</button>
+        <button @click="upMonth" class="simple-button">up</button>
+        <button @click="downMonth" class="simple-button">down</button>
       </div>
-      <div class="calendar-day">
-        <span class="full">Wednesday</span>
-        <span class="abbr">Wed</span>
+    </section>
+    <section class="flex justify-center">
+      <div
+        class="calendar-grid"
+        :style="{
+          gridTemplateRows: isExpandedRows
+            ? '2rem repeat(6, 5fr)'
+            : '2rem repeat(5, 5fr)',
+        }"
+      >
+        <div class="calendar-day" v-for="day in days">
+          <span class="full">{{ day }}</span>
+          <span class="abbr">{{ day.slice(0, 3) }}</span>
+        </div>
+        <div
+          v-for="(date, index) in displayedDates"
+          :key="index"
+          class="calendar-cell"
+        >
+          {{ date }}
+        </div>
       </div>
-      <div class="calendar-day">
-        <span class="full">Thursday</span>
-        <span class="abbr">Thur</span>
-      </div>
-      <div class="calendar-day">
-        <span class="full">Friday</span>
-        <span class="abbr">Fri</span>
-      </div>
-      <div class="calendar-day">
-        <span class="full">Saturday</span>
-        <span class="abbr">Sat</span>
-      </div>
-      <div class="calendar-day">
-        <span class="full">Sunday</span>
-        <span class="abbr">Sun</span>
-      </div>
-      <div v-for="day in days" class="calendar-cell">{{ day }}</div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>

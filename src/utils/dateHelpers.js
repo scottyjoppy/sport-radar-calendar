@@ -1,26 +1,6 @@
-export function getDate() {
-  return new Date();
-}
-
-export function getDaysInMonth(year, month) {
-  return new Date(year, month + 1, 0).getDate();
-}
-
-/* 
-REMINDER: JS Date Obj
-- Year = base 0
-- Month = base 0
-- Number Day = base 1?
-- Name Day = base 0
-*/
-
-export function getFirstDayCurrMonth(date) {
-  return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-}
-
-export function getDayArray(year, month, offset = 0) {
+export function getDateArray(year, month, startMonday) {
   const firstOfMonth = new Date(year, month, 1);
-  const firstDay = firstOfMonth.getDay() - offset;
+  const firstDay = firstOfMonth.getDay();
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const daysInPrevMonth = new Date(year, month, 0).getDate();
@@ -35,8 +15,12 @@ export function getDayArray(year, month, offset = 0) {
     dayArray.push(i);
   }
 
-  while (dayArray.length < 35) {
-    dayArray.push(dayArray.length - daysInMonth - (firstDay - 1 + offset) + 1);
+  if (startMonday && firstDay !== 0) dayArray.shift();
+
+  let i = 1;
+  while (dayArray.length < 42) {
+    dayArray.push(i);
+    i++;
   }
 
   return dayArray;
