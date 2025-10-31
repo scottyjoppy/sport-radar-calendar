@@ -5,23 +5,23 @@ export function getDateArray(year, month, startMonday) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const daysInPrevMonth = new Date(year, month, 0).getDate();
 
-  const dayArray = [];
+  const dateArray = [];
 
   for (let i = firstDay - 1; i >= 0; i--) {
-    dayArray.push(daysInPrevMonth - i);
+    dateArray.push(new Date(year, month - 1, daysInPrevMonth - i));
   }
 
   for (let i = 1; i <= daysInMonth; i++) {
-    dayArray.push(i);
+    dateArray.push(new Date(year, month, i));
   }
 
-  if (startMonday && firstDay !== 0) dayArray.shift();
+  if (startMonday && firstDay !== 0) dateArray.shift();
 
   let i = 1;
-  while (dayArray.length < 42) {
-    dayArray.push(i);
+  while (dateArray.length < 42) {
+    dateArray.push(new Date(year, month + 1, i));
     i++;
   }
 
-  return dayArray;
+  return dateArray;
 }

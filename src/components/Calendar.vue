@@ -26,12 +26,10 @@ const allDates = computed(() => {
 const isExpandedRows = computed(() => {
   if (
     allDates.value.length > 35 &&
-    allDates.value[allDates.value.length - 7] > 20
-  ) {
-    console.log(allDates.value);
+    allDates.value[allDates.value.length - 7].getDate() > 20
+  )
     return true;
-  }
-  console.log(false);
+
   return false;
 });
 
@@ -52,6 +50,10 @@ const flipStart = () => (startMonday.value = !startMonday.value);
 const onDateChange = (e) => {
   const [year, month, day] = e.target.value.split("-");
   date.value = new Date(year, month - 1, day);
+};
+
+const logDay = (date) => {
+  console.log(date.to);
 };
 </script>
 
@@ -87,8 +89,9 @@ const onDateChange = (e) => {
           v-for="(date, index) in displayedDates"
           :key="index"
           class="calendar-cell"
+          @click="logDay(date)"
         >
-          {{ date }}
+          {{ date.getDate() }}
         </div>
       </div>
     </section>
