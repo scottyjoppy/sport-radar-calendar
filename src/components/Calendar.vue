@@ -53,7 +53,7 @@ const onDateChange = (e) => {
 };
 
 const logDay = (date) => {
-  console.log(date.to);
+  console.log(date);
 };
 </script>
 

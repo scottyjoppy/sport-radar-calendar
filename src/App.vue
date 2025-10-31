@@ -1,9 +1,8 @@
 <script setup>
-import Calendar from "@/components/Calendar.vue";
 import Navbar from "@/components/Navbar.vue";
-import SquareButton from "@/components/SquareButton.vue";
 import { supabase } from "@/lib/subabaseClient";
 import { onMounted, ref } from "vue";
+import { RouterView } from "vue-router";
 
 const sports = ref([]);
 
@@ -19,13 +18,5 @@ onMounted(() => {
 
 <template>
   <Navbar></Navbar>
-  <ul>
-    <li v-for="sport in sports" :key="sport.id">
-      {{ sport.name }}
-    </li>
-  </ul>
-  <div class="w-full flex justify-center">
-    <SquareButton>Find out more</SquareButton>
-  </div>
-  <Calendar></Calendar>
+  <RouterView />
 </template>
