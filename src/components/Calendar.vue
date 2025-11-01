@@ -1,19 +1,14 @@
 <script setup>
 import { offsetArray } from "@/utils/arrayHelpers";
 import { DAYS, MONTHS } from "@/utils/calendar";
-import { getDateArray } from "@/utils/dateHelpers";
+import { getDateArray, inputDateFormat } from "@/utils/dateHelpers";
 import { computed, ref } from "vue";
 
 const startMonday = ref(true);
 
 const date = ref(new Date());
 
-const formattedDate = computed(() => {
-  const d = date.value;
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}-${month}-${day}`;
-});
+const formattedDate = computed(() => inputDateFormat(date));
 
 const allDates = computed(() => {
   return getDateArray(

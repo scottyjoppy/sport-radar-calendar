@@ -1,16 +1,11 @@
 <script setup>
-import { supabase } from "@/lib/subabaseClient";
+import { getSports } from "@/composables/getSupabase";
 import { onMounted, ref } from "vue";
 
 const sports = ref([]);
 
-async function getSports() {
-  const { data } = await supabase.from("sports").select();
-  sports.value = data;
-}
-
-onMounted(() => {
-  getSports();
+onMounted(async () => {
+  sports.value = await getSports();
 });
 </script>
 

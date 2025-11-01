@@ -15,6 +15,7 @@
 
   --off-white: #fefefe;
   --grey: #aaaaaa;
+  --grey-light: #eeeeee;
 
   --off-black: #222222;
   font-family: "Source Sans 3", sans-serif;
@@ -157,4 +158,18 @@ body {
   .calendar-day .abbr {
     display: none;
   }
+}
+
+.event-item:nth-child(even) {
+  background-color: var(--grey-light);
+}
+
+.event-item:nth-child(odd) {
+  background-color: var(--grey);
+}
+
+.event-item-title {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 1px 1rem;
 }
