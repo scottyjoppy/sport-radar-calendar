@@ -1,4 +1,4 @@
-export const DAYS = [
+export const WEEKDAYS = [
   "Sunday",
   "Monday",
   "Tuesday",
