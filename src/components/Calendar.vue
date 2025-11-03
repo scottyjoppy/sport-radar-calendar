@@ -2,7 +2,7 @@
 import { useEvents } from "@/composables/useEvents";
 import { offsetArray } from "@/utils/arrayHelpers";
 import { MONTHS, WEEKDAYS } from "@/utils/calendar";
-import { getDateArray, inputDateFormat } from "@/utils/dateHelpers";
+import { dayToUTCDay, getDateArray, inputDateFormat } from "@/utils/dateHelpers";
 import { computed, onMounted, ref, watch } from "vue";
 
 const { events } = useEvents();
@@ -63,10 +63,6 @@ const changeSelectedDate = async (day) => {
 const eventsForDay = (day) => {
   const dayString = day.toISOString().slice(0, 10);
   return events.value.filter((e) => e.event_day === dayString);
-};
-
-const dayToUTCDay = (day) => {
-  return new Date(Date.UTC(day.getFullYear(), day.getMonth(), day.getDate()));
 };
 
 onMounted(() => {

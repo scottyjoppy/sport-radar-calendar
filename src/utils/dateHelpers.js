@@ -32,3 +32,7 @@ export function inputDateFormat(date) {
   const day = String(d.getDate()).padStart(2, "0");
   return `${d.getFullYear()}-${month}-${day}`;
 }
+
+export function dayToUTCDay(day) {
+  return new Date(Date.UTC(day.getFullYear(), day.getMonth(), day.getDate()));
+}

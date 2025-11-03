@@ -17,7 +17,7 @@ export function useEvents() {
     const { data, error } = await supabase
       .from("events")
       .update(updatedFields)
-      .eq("id", id)
+      .eq("event_id", id)
       .select();
 
     if (error) {
@@ -31,7 +31,7 @@ export function useEvents() {
   };
 
   const deleteEvent = async (id) => {
-    const { error } = await supabase.from("events").delete().eq("id", id);
+    const { error } = await supabase.from("events").delete().eq("event_id", id);
     if (!error) {
       events.value = events.value.filter((e) => e.id !== id);
     }
