@@ -109,18 +109,20 @@ body {
 }
 
 .calendar-cell {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   border-top: 1px solid var(--grey);
   border-right: 1px solid var(--grey);
-  justify-content: center;
   color: var(--off-black);
   background: var(--off-white);
   transition: background-color 0.3s;
 }
 
 .calendar-cell:hover {
-  background: var(--off-black);
-  color: var(--off-white);
+  background: var(--grey-light);
+  color: var(--primary);
+  font-weight: bolder;
 }
 
 .calendar-day {
@@ -172,4 +174,20 @@ body {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   padding: 1px 1rem;
+}
+
+.dot-container > :nth-child(odd) {
+  background-color: var(--primary-light);
+}
+
+.dot-container > :nth-child(even) {
+  background-color: var(--secondary);
+}
+
+.dot {
+  height: 25%;
+  aspect-ratio: 1 / 1;
+  display: inline-block;
+  margin: 1px;
+  border-radius: 50%;
 }
