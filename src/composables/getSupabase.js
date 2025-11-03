@@ -4,7 +4,8 @@ export async function getEvents(filters = {}) {
   let query = supabase.from("events").select(`
       id,
       played,
-      start_time,
+      event_day,
+      event_time,
       venue ( name ),
       sport ( name ),
       home_team ( team_name ),
