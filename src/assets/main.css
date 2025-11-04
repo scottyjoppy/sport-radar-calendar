@@ -9,6 +9,7 @@
   --primary: #0f1151;
   --primary-dark: #00003c;
   --primary-light: #1e2166;
+  --primary-lighter: #abacd4;
 
   --secondary-dark: #8e1135;
   --secondary: #fe0004;
@@ -16,6 +17,7 @@
   --off-white: #fefefe;
   --grey: #aaaaaa;
   --grey-light: #eeeeee;
+  --grey-dark: #666666;
 
   --off-black: #222222;
   font-family: "Source Sans 3", sans-serif;

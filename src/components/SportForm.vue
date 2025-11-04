@@ -38,63 +38,102 @@ const saveEdit = async (id) => {
 };
 </script>
 
+<style scoped src="/src/assets/form.css"></style>
+
 <template>
-  <section class="flex flex-col justify-center gap-10">
-    <section>
-      <div v-for="sport in sortedSports">
-        <div class="flex gap-2">
-          <template v-if="editingId === sport.sport_id">
-            <div class="flex justify-between w-full">
-              <input type="text" v-model="editedName" />
-              <div>
-                <button @click="saveEdit(sport.sport_id)">Save</button>
-                <button @click="cancelEdit">Cancel</button>
-              </div>
-            </div>
-          </template>
-          <template v-else>
-            <div class="flex justify-between w-full">
-              <div class="capitalize">{{ sport.sport_name }}</div>
-              <div>
-                <button @click="startEditing(sport)">Edit</button>
-                <button @click="deleteSports(sport.sport_id)">Delete</button>
-              </div>
-            </div>
-          </template>
-        </div>
+  <section class="form-section-container">
+    <h1>Sports</h1>
+    <section class="sports-table">
+      <div
+        v-for="sport in sortedSports"
+        :key="sport.sport_id"
+        class="sports-row"
+      >
+        <template v-if="editingId === sport.sport_id">
+          <input type="text" v-model="editedName" class="form-input" title/>
+          <div class="form-btn-container">
+            <button @click="saveEdit(sport.sport_id)" class="form-button">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                  d="M480 128c0 8.188-3.125 16.38-9.375 22.62l-256 256C208.4 412.9 200.2 416 192 416s-16.38-3.125-22.62-9.375l-128-128C35.13 272.4 32 264.2 32 256c0-18.28 14.95-32 32-32 8.188 0 16.38 3.125 22.62 9.375L192 338.8l233.4-233.4c6.2-6.27 14.4-9.4 22.6-9.4 17.1 0 32 13.7 32 32z"
+                />
+              </svg>
+            </button>
+            <button @click="cancelEdit" class="form-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="svg-style rotate-45"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28 14H18V4a2 2 0 0 0-4 0v10H4a2 2 0 0 0 0 4h10v10a2 2 0 0 0 4 0V18h10a2 2 0 0 0 0-4z"
+                />
+              </svg>
+            </button>
+          </div>
+        </template>
+        <template v-else>
+          <h3>{{ sport.sport_name }}</h3>
+          <div class="form-btn-container">
+            <button @click="startEditing(sport)" class="form-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="svg-style"
+              >
+                <path
+                  d="m18.988 2.012 3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287-3-3L8 13z"
+                />
+                <path
+                  d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z"
+                />
+              </svg>
+            </button>
+            <button @click="deleteSports(sport.sport_id)" class="form-button">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <g data-name="Layer 2">
+                  <path
+                    d="M20 29h-8a5 5 0 0 1-5-5V12a1 1 0 0 1 2 0v12a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V12a1 1 0 0 1 2 0v12a5 5 0 0 1-5 5ZM26 9H6a1 1 0 0 1 0-2h20a1 1 0 0 1 0 2Z"
+                  />
+                  <path
+                    d="M20 9h-8a1 1 0 0 1-1-1V6a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v2a1 1 0 0 1-1 1Zm-7-2h6V6a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1ZM14 23a1 1 0 0 1-1-1v-7a1 1 0 0 1 2 0v7a1 1 0 0 1-1 1ZM18 23a1 1 0 0 1-1-1v-7a1 1 0 0 1 2 0v7a1 1 0 0 1-1 1Z"
+                  />
+                </g>
+                <path style="fill: none" d="M0 0h32v32H0z" />
+              </svg>
+            </button>
+          </div>
+        </template>
       </div>
     </section>
-    <div class="flex justify-center items-center h-10 w-full">
+    <section class="add-btn-container">
       <div
-        class="transition-all duration-500 overflow-hidden"
-        :class="newSportForm ? 'w-1/2 rounded-l-full' : 'w-0 rounded-r-full'"
+        class="input-container"
+        :class="
+          newSportForm ? 'input-container-show' : 'input-container-hidden'
+        "
       >
-        <form
-          class="bg-(--primary-light) text-(--off-white) flex justify-between p-2 h-full"
-          @submit.prevent="onSubmit"
-        >
+        <form class="form-container" @submit.prevent="onSubmit">
           <label><span class="text-nowrap">Sport Name</span></label>
           <input
             type="text"
             required
             v-model="sportName"
-            class="bg-(--off-white) text-(--off-black)"
+            class="my-input"
+            placeholder="Sport name here"
+            title
           />
-          <button type="submit">Submit</button>
+          <button type="submit" class="my-input-submit">Submit</button>
         </form>
       </div>
       <div
-        class="h-full flex transition-all hover:cursor-pointer p-2 duration-500"
+        class="plus-btn-container"
         @click="newSportForm = !newSportForm"
-        :class="[
-          newSportForm
-            ? 'rounded-r-[50%] rounded-l-[0%] bg-(--primary-light) hover:bg-(--primary-dark) hover:*:fill-(--off-white) *:fill-(--secondary)'
-            : 'rounded-[50%] bg-(--grey-light) hover:bg-(--grey) hover:*:fill-(--primary)',
-        ]"
+        :class="[newSportForm ? 'plus-btn-show' : 'plus-btn-hidden']"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="fill-(--grey) transition-all duration-500"
+          class="svg-style"
           viewBox="0 0 32 32"
         >
           <path
@@ -102,6 +141,6 @@ const saveEdit = async (id) => {
           />
         </svg>
       </div>
-    </div>
+    </section>
   </section>
 </template>

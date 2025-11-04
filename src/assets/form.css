@@ -1,0 +1,217 @@
+h1 {
+  text-align: center;
+  text-decoration: underline;
+  font-size: 5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+h3 {
+  text-transform: capitalize;
+}
+
+.form-section-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.sports-table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.sports-row {
+  width: 50%;
+  height: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1rem;
+  border-radius: 1rem;
+}
+
+.sports-row:nth-child(odd) {
+  background-color: var(--off-black);
+  color: var(--off-white);
+}
+
+.sports-row:nth-child(even) {
+  background-color: var(--grey-light);
+}
+
+.form-btn-container {
+  height: 100%;
+  display: flex;
+}
+
+.sports-row:nth-child(odd) svg {
+  fill: var(--off-white);
+}
+
+.form-button {
+  display: flex;
+  width: 3rem;
+  justify-content: center;
+  align-items: center;
+  color: var(--off-black);
+  transition: all 100ms;
+}
+
+.form-button:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.form-button:last-child:hover > * {
+  fill: var(--secondary);
+}
+
+.form-button > svg {
+  height: 50%;
+  fill: var(--off-black);
+}
+
+.form-button:hover {
+  cursor: pointer;
+  background-color: var(--off-white);
+}
+
+.form-button:hover > svg {
+  fill: var(--grey);
+}
+
+.form-input {
+  background-color: var(--off-white);
+  color: var(--off-black);
+  outline: none;
+  padding: 0 8px;
+  border-radius: 8px;
+}
+
+.sports-row:nth-child(odd) .form-input {
+  background-color: var(--grey-dark);
+  color: var(--off-white);
+}
+
+.sports-row:nth-child(even) .form-input {
+  background-color: var(--off-white);
+  color: var(--off-black);
+}
+
+.add-btn-container {
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container {
+  height: 100%;
+  transition: all 500ms;
+  overflow: hidden;
+}
+
+.input-container-hidden {
+  width: 0;
+  opacity: 0;
+  border-top-right-radius: 5rem;
+  border-bottom-right-radius: 5rem;
+}
+
+.input-container-show {
+  width: 55%;
+  opacity: 100%;
+  border-top-left-radius: 5rem;
+  border-bottom-left-radius: 5rem;
+}
+
+.form-container {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  background-color: var(--primary-light);
+  color: var(--off-white);
+}
+
+.my-input {
+  background-color: var(--primary-lighter);
+  color: var(--primary);
+  outline: none;
+  padding: 0 8px;
+  border-radius: 8px;
+}
+
+.my-input::placeholder {
+  font-style: italic;
+}
+
+.my-input-submit {
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding: 1px 1rem;
+  border-radius: 8px 8px 8px 8px;
+  transition: all 100ms;
+}
+
+.my-input-submit:hover {
+  background-color: var(--primary-dark);
+  color: var(--off-white);
+  cursor: pointer;
+}
+.plus-btn-container {
+  height: 100%;
+  display: flex;
+  padding: 8px;
+  transition: all 500ms;
+}
+
+.plus-btn-container:hover {
+  cursor: pointer;
+}
+
+.plus-btn-show {
+  border-radius: 0 50% 50% 0;
+  background-color: var(--primary-light);
+}
+
+.plus-btn-show:hover {
+  background-color: var(--primary-dark);
+}
+
+.plus-btn-show > * {
+  fill: var(--secondary);
+}
+
+.plus-btn-show:hover > * {
+  fill: var(--off-white);
+}
+
+.plus-btn-hidden {
+  border-radius: 50%;
+  background-color: var(--grey-light);
+}
+
+.plus-btn-hidden:hover {
+  background-color: var(--grey);
+}
+
+.plus-btn-hidden > * {
+  fill: var(--grey);
+}
+
+.plus-btn-hidden:hover > * {
+  fill: var(--primary);
+}
+
+.svg-style {
+  transition: all 200ms;
+}
