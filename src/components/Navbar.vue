@@ -15,9 +15,10 @@ import { RouterLink } from "vue-router";
     </RouterLink>
     <div class="flex gap-3">
       <RouterLink class="nav-link" to="/calendar">Calendar</RouterLink>
-      <RouterLink class="nav-link" to="/teams">Teams</RouterLink>
       <RouterLink class="nav-link" to="/events">Events</RouterLink>
+      <RouterLink class="nav-link" to="/teams">Teams</RouterLink>
       <RouterLink class="nav-link" to="/sports">Sports</RouterLink>
+      <RouterLink class="nav-link" to="/venues">Venues</RouterLink>
     </div>
   </nav>
 </template>

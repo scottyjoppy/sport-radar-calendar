@@ -1,30 +1,30 @@
 <script setup>
-import { useSports } from "@/composables/useSports";
+import { useVenues } from "@/composables/useVenues";
 import { computed, ref } from "vue";
 
-const { updateSports, deleteSports, addSports, sports } = useSports();
+const { updateVenues, deleteVenues, addVenues, venues } = useVenues();
 
-const sportName = ref("");
+const venueName = ref("");
 const editedName = ref("");
 const editingId = ref(null);
-const newSportForm = ref(false);
+const newVenueForm = ref(false);
 
-const sortedSports = computed(() => {
-  return [...sports.value].sort((a, b) => a.sport_id - b.sport_id);
+const sortedVenues = computed(() => {
+  return [...venues.value].sort((a, b) => a.venue_id - b.venue_id);
 });
 
 const onSubmit = async () => {
-  if (!sportName.value.trim()) return;
-  const newSport = { sport_name: sportName.value.toLowerCase() };
-  await addSports(newSport);
+  if (!venueName.value.trim()) return;
+  const newVenue = { venue_name: venueName.value.toLowerCase() };
+  await addVenues(newVenue);
 
-  sportName.value = "";
-  newSportForm.value = false;
+  venueName.value = "";
+  newVenueForm.value = false;
 };
 
-const startEditing = (sport) => {
-  editingId.value = sport.sport_id;
-  editedName.value = sport.sport_name;
+const startEditing = (venue) => {
+  editingId.value = venue.venue_id;
+  editedName.value = venue.venue_name;
 };
 
 const cancelEdit = () => {
@@ -33,7 +33,7 @@ const cancelEdit = () => {
 
 const saveEdit = async (id) => {
   if (!editedName.value.trim()) return;
-  await updateSports(id, { sport_name: editedName.value.toLowerCase() });
+  await updateVenues(id, { venue_name: editedName.value.toLowerCase() });
   editingId.value = null;
 };
 </script>
@@ -42,17 +42,17 @@ const saveEdit = async (id) => {
 
 <template>
   <section class="form-section-container">
-    <h1>Sports</h1>
+    <h1>Venues</h1>
     <section class="items-table">
       <div
-        v-for="sport in sortedSports"
-        :key="sport.sport_id"
+        v-for="venue in sortedVenues"
+        :key="venue.venue_id"
         class="items-row"
       >
-        <template v-if="editingId === sport.sport_id">
-          <input type="text" v-model="editedName" class="form-input" title/>
+        <template v-if="editingId === venue.venue_id">
+          <input type="text" v-model="editedName" class="form-input" title />
           <div class="form-btn-container">
-            <button @click="saveEdit(sport.sport_id)" class="form-button">
+            <button @click="saveEdit(venue.venue_id)" class="form-button">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
                   d="M480 128c0 8.188-3.125 16.38-9.375 22.62l-256 256C208.4 412.9 200.2 416 192 416s-16.38-3.125-22.62-9.375l-128-128C35.13 272.4 32 264.2 32 256c0-18.28 14.95-32 32-32 8.188 0 16.38 3.125 22.62 9.375L192 338.8l233.4-233.4c6.2-6.27 14.4-9.4 22.6-9.4 17.1 0 32 13.7 32 32z"
@@ -73,9 +73,9 @@ const saveEdit = async (id) => {
           </div>
         </template>
         <template v-else>
-          <h3>{{ sport.sport_name }}</h3>
+          <h3>{{ venue.venue_name }}</h3>
           <div class="form-btn-container">
-            <button @click="startEditing(sport)" class="form-button">
+            <button @click="startEditing(venue)" class="form-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -89,7 +89,7 @@ const saveEdit = async (id) => {
                 />
               </svg>
             </button>
-            <button @click="deleteSports(sport.sport_id)" class="form-button">
+            <button @click="deleteVenues(venue.venue_id)" class="form-button">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                 <g data-name="Layer 2">
                   <path
@@ -110,17 +110,17 @@ const saveEdit = async (id) => {
       <div
         class="input-container"
         :class="
-          newSportForm ? 'input-container-show' : 'input-container-hidden'
+          newVenueForm ? 'input-container-show' : 'input-container-hidden'
         "
       >
         <form class="form-container" @submit.prevent="onSubmit">
-          <label><span class="text-nowrap">Sport Name</span></label>
+          <label><span class="text-nowrap">Venue Name</span></label>
           <input
             type="text"
             required
-            v-model="sportName"
+            v-model="venueName"
             class="my-input"
-            placeholder="Sport name here"
+            placeholder="Venue name here"
             title
           />
           <button type="submit" class="my-input-submit">Submit</button>
@@ -128,8 +128,8 @@ const saveEdit = async (id) => {
       </div>
       <div
         class="plus-btn-container"
-        @click="newSportForm = !newSportForm"
-        :class="[newSportForm ? 'plus-btn-show' : 'plus-btn-hidden']"
+        @click="newVenueForm = !newVenueForm"
+        :class="[newVenueForm ? 'plus-btn-show' : 'plus-btn-hidden']"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
