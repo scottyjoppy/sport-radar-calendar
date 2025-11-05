@@ -1,39 +1,84 @@
 <script setup>
+import { useSports } from "@/composables/useSports";
 import { useTeams } from "@/composables/useTeams";
 import { computed, ref } from "vue";
 
 const { updateTeams, deleteTeams, addTeams, teams } = useTeams();
+const { sports } = useSports();
 
 const teamName = ref("");
-const editedName = ref("");
+const officialName = ref("");
+const countryCode = ref("");
+const sportId = ref("");
+const abbreviation = ref("");
+
 const editingId = ref(null);
 const newTeamForm = ref(false);
+const expandTeamsId = ref(null);
+
+const editedTeam = ref({
+  official_name: "",
+  team_name: "",
+  country_code: "",
+  sport_id: "",
+  abbreviation: "",
+});
 
 const sortedTeams = computed(() => {
   return [...teams.value].sort((a, b) => a.team_id - b.team_id);
 });
 
 const onSubmit = async () => {
-  if (!teamName.value.trim()) return;
-  const newTeam = { team_name: teamName.value.toLowerCase() };
+  if (
+    !teamName.value.trim() ||
+    !officialName.value.trim() ||
+    !countryCode.value ||
+    !sportId.value ||
+    !abbreviation.value
+  )
+    return;
+
+  const newTeam = {
+    team_name: teamName.value.toLowerCase(),
+    official_name: officialName.value,
+    country_code: countryCode.value.toUpperCase(),
+    sport_id: sportId.value,
+    abbreviation: abbreviation.value.toUpperCase(),
+  };
+
   await addTeams(newTeam);
 
   teamName.value = "";
+  officialName.value = "";
+  countryCode.value = "";
+  sportId.value = "";
+  abbreviation.value = "";
   newTeamForm.value = false;
 };
 
-const startEditing = (team) => {
-  editingId.value = team.team_id;
-  editedName.value = team.team_name;
+const expandTeams = (team) => {
+  expandTeamsId.value =
+    expandTeamsId.value === team.team_id ? null : team.team_id;
 };
 
 const cancelEdit = () => {
   editingId.value = null;
 };
 
+const startEditing = (team) => {
+  editingId.value = team.team_id;
+  editedTeam.value = { ...team };
+};
+
 const saveEdit = async (id) => {
-  if (!editedName.value.trim()) return;
-  await updateTeams(id, { team_name: editedName.value.toLowerCase() });
+  if (!editedTeam.value.team_name.trim()) return;
+  await updateTeams(id, {
+    team_name: editedTeam.value.team_name.toLowerCase(),
+    official_name: editedTeam.value.official_name,
+    country_code: editedTeam.value.country_code.toUpperCase(),
+    sport_id: editedTeam.value.sport_id,
+    abbreviation: editedTeam.value.abbreviation.toUpperCase(),
+  });
   editingId.value = null;
 };
 </script>
@@ -46,16 +91,52 @@ const saveEdit = async (id) => {
     <section class="items-table">
       <div v-for="team in sortedTeams" :key="team.team_id" class="items-row">
         <template v-if="editingId === team.team_id">
-          <input type="text" v-model="editedName" class="form-input" title />
+          <div class="edit-team-form">
+            <label class="underline">Official Name</label>
+            <input
+              v-model="editedTeam.official_name"
+              placeholder="Official Name"
+              class="form-input"
+            />
+            <label class="underline">Team Name</label>
+            <input
+              v-model="editedTeam.team_name"
+              placeholder="Team Name"
+              class="form-input"
+            />
+            <label class="underline">Country Code</label>
+            <input
+              v-model="editedTeam.country_code"
+              placeholder="Country Code"
+              class="form-input"
+            />
+            <label class="underline">Abbreviation</label>
+            <input
+              v-model="editedTeam.abbreviation"
+              placeholder="Abbreviation"
+              class="form-input"
+            />
+            <label class="underline">Sport</label>
+            <select v-model="editedTeam.sport_id" class="form-input">
+              <option
+                v-for="sport in sports"
+                :key="sport.sport_id"
+                :value="sport.sport_id"
+              >
+                {{ sport.sport_name }}
+              </option>
+            </select>
+          </div>
+
           <div class="form-btn-container">
-            <button @click="saveEdit(team.team_id)" class="form-button">
+            <button @click="saveEdit(team.team_id)" class="form-button-expand">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
                   d="M480 128c0 8.188-3.125 16.38-9.375 22.62l-256 256C208.4 412.9 200.2 416 192 416s-16.38-3.125-22.62-9.375l-128-128C35.13 272.4 32 264.2 32 256c0-18.28 14.95-32 32-32 8.188 0 16.38 3.125 22.62 9.375L192 338.8l233.4-233.4c6.2-6.27 14.4-9.4 22.6-9.4 17.1 0 32 13.7 32 32z"
                 />
               </svg>
             </button>
-            <button @click="cancelEdit" class="form-button">
+            <button @click="cancelEdit" class="form-button-expand">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="svg-style rotate-45"
@@ -69,9 +150,52 @@ const saveEdit = async (id) => {
           </div>
         </template>
         <template v-else>
-          <h3>{{ team.team_name }}</h3>
+          <div class="team-container">
+            <template v-if="expandTeamsId === team.team_id">
+              <h3 class="underline">{{ team.official_name }}</h3>
+              <h3 class="italic">{{ team.team_name }}</h3>
+              <h3>
+                Country code:
+                <span class="font-bold">{{ team.country_code }}</span>
+              </h3>
+              <h3>Abbreviation: {{ team.abbreviation }}</h3>
+              <h3>
+                Sport:
+                {{
+                  sports.find((s) => s.sport_id === team.sport_id)?.sport_name
+                }}
+              </h3>
+            </template>
+            <template v-else>
+              <h3>{{ team.team_name }}</h3>
+            </template>
+          </div>
           <div class="form-btn-container">
-            <button @click="startEditing(team)" class="form-button">
+            <button
+              @click="expandTeams(team)"
+              :class="
+                expandTeamsId === team.team_id
+                  ? 'form-button-expand'
+                  : 'form-button'
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 48 48"
+                :class="expandTeamsId === team.team_id ? 'rotate-180' : ''"
+              >
+                <path d="M33.17 17.17 24 26.34l-9.17-9.17L12 20l12 12 12-12z" />
+                <path d="M0 0h48v48H0z" fill="none" />
+              </svg>
+            </button>
+            <button
+              @click="startEditing(team)"
+              :class="
+                expandTeamsId === team.team_id
+                  ? 'form-button-expand'
+                  : 'form-button'
+              "
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -85,19 +209,21 @@ const saveEdit = async (id) => {
                 />
               </svg>
             </button>
-            <button @click="deleteTeams(team.team_id)" class="form-button">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                <g data-name="Layer 2">
-                  <path
-                    d="M20 29h-8a5 5 0 0 1-5-5V12a1 1 0 0 1 2 0v12a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V12a1 1 0 0 1 2 0v12a5 5 0 0 1-5 5ZM26 9H6a1 1 0 0 1 0-2h20a1 1 0 0 1 0 2Z"
-                  />
-                  <path
-                    d="M20 9h-8a1 1 0 0 1-1-1V6a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v2a1 1 0 0 1-1 1Zm-7-2h6V6a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1ZM14 23a1 1 0 0 1-1-1v-7a1 1 0 0 1 2 0v7a1 1 0 0 1-1 1ZM18 23a1 1 0 0 1-1-1v-7a1 1 0 0 1 2 0v7a1 1 0 0 1-1 1Z"
-                  />
-                </g>
-                <path style="fill: none" d="M0 0h32v32H0z" />
-              </svg>
-            </button>
+            <template v-if="expandTeamsId !== team.team_id">
+              <button @click="deleteTeams(team.team_id)" class="form-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                  <g data-name="Layer 2">
+                    <path
+                      d="M20 29h-8a5 5 0 0 1-5-5V12a1 1 0 0 1 2 0v12a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V12a1 1 0 0 1 2 0v12a5 5 0 0 1-5 5ZM26 9H6a1 1 0 0 1 0-2h20a1 1 0 0 1 0 2Z"
+                    />
+                    <path
+                      d="M20 9h-8a1 1 0 0 1-1-1V6a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v2a1 1 0 0 1-1 1Zm-7-2h6V6a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1ZM14 23a1 1 0 0 1-1-1v-7a1 1 0 0 1 2 0v7a1 1 0 0 1-1 1ZM18 23a1 1 0 0 1-1-1v-7a1 1 0 0 1 2 0v7a1 1 0 0 1-1 1Z"
+                    />
+                  </g>
+                  <path style="fill: none" d="M0 0h32v32H0z" />
+                </svg>
+              </button>
+            </template>
           </div>
         </template>
       </div>
@@ -108,15 +234,33 @@ const saveEdit = async (id) => {
         :class="newTeamForm ? 'input-container-show' : 'input-container-hidden'"
       >
         <form class="form-container" @submit.prevent="onSubmit">
-          <label><span class="text-nowrap">Team Name</span></label>
+          <label>Official Name</label>
+          <input type="text" v-model="officialName" class="my-input" required />
+
+          <label>Team Name</label>
+          <input type="text" v-model="teamName" class="my-input" required />
+
+          <label>Country Code</label>
           <input
             type="text"
-            required
-            v-model="teamName"
+            v-model="countryCode"
             class="my-input"
-            placeholder="Team name here"
-            title
+            maxlength="3"
+            required
           />
+
+          <label>Sport</label>
+          <select v-model="sportId" class="my-input" required>
+            <option disabled value="">Select a sport</option>
+            <option
+              v-for="sport in sports"
+              :key="sport.sport_id"
+              :value="sport.sport_id"
+            >
+              {{ sport.sport_name }}
+            </option>
+          </select>
+
           <button type="submit" class="my-input-submit">Submit</button>
         </form>
       </div>
