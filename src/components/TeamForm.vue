@@ -46,6 +46,8 @@ const onSubmit = async () => {
     abbreviation: abbreviation.value.toUpperCase(),
   };
 
+  console.log(newTeam);
+
   await addTeams(newTeam);
 
   teamName.value = "";
@@ -91,79 +93,101 @@ const saveEdit = async (id) => {
     <section class="items-table">
       <div v-for="team in sortedTeams" :key="team.team_id" class="items-row">
         <template v-if="editingId === team.team_id">
-          <div class="edit-team-form">
-            <label class="underline">Official Name</label>
-            <input
-              v-model="editedTeam.official_name"
-              placeholder="Official Name"
-              class="form-input"
-            />
-            <label class="underline">Team Name</label>
-            <input
-              v-model="editedTeam.team_name"
-              placeholder="Team Name"
-              class="form-input"
-            />
-            <label class="underline">Country Code</label>
-            <input
-              v-model="editedTeam.country_code"
-              placeholder="Country Code"
-              class="form-input"
-            />
-            <label class="underline">Abbreviation</label>
-            <input
-              v-model="editedTeam.abbreviation"
-              placeholder="Abbreviation"
-              class="form-input"
-            />
-            <label class="underline">Sport</label>
-            <select v-model="editedTeam.sport_id" class="form-input">
-              <option
-                v-for="sport in sports"
-                :key="sport.sport_id"
-                :value="sport.sport_id"
-              >
-                {{ sport.sport_name }}
-              </option>
-            </select>
-          </div>
-
-          <div class="form-btn-container">
-            <button @click="saveEdit(team.team_id)" class="form-button-expand">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path
-                  d="M480 128c0 8.188-3.125 16.38-9.375 22.62l-256 256C208.4 412.9 200.2 416 192 416s-16.38-3.125-22.62-9.375l-128-128C35.13 272.4 32 264.2 32 256c0-18.28 14.95-32 32-32 8.188 0 16.38 3.125 22.62 9.375L192 338.8l233.4-233.4c6.2-6.27 14.4-9.4 22.6-9.4 17.1 0 32 13.7 32 32z"
-                />
-              </svg>
-            </button>
-            <button @click="cancelEdit" class="form-button-expand">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="svg-style rotate-45"
-                viewBox="0 0 32 32"
-              >
-                <path
-                  d="M28 14H18V4a2 2 0 0 0-4 0v10H4a2 2 0 0 0 0 4h10v10a2 2 0 0 0 4 0V18h10a2 2 0 0 0 0-4z"
-                />
-              </svg>
-            </button>
-          </div>
+          <form
+            class="edit-team-form-container"
+            @submit.prevent="saveEdit(team.team_id)"
+          >
+            <div class="edit-team-form">
+              <label class="underline">Official Name</label>
+              <input
+                v-model="editedTeam.official_name"
+                placeholder="Official Name"
+                class="form-input"
+                required
+              />
+              <label class="underline">Team Name</label>
+              <input
+                v-model="editedTeam.team_name"
+                placeholder="Team Name"
+                class="form-input"
+                required
+              />
+              <label class="underline">Country Code</label>
+              <input
+                v-model="editedTeam.country_code"
+                placeholder="Country Code"
+                maxlength="3"
+                class="form-input"
+                required
+              />
+              <label class="underline">Abbreviation</label>
+              <input
+                v-model="editedTeam.abbreviation"
+                placeholder="Abbreviation"
+                maxlength="3"
+                class="form-input"
+                required
+              />
+              <label class="underline">Sport</label>
+              <select v-model="editedTeam.sport_id" class="form-input">
+                <option
+                  v-for="sport in sports"
+                  :key="sport.sport_id"
+                  :value="sport.sport_id"
+                  required
+                >
+                  {{ sport.sport_name }}
+                </option>
+              </select>
+            </div>
+            <div class="form-btn-container">
+              <button class="form-btn-expand" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path
+                    d="M480 128c0 8.188-3.125 16.38-9.375 22.62l-256 256C208.4 412.9 200.2 416 192 416s-16.38-3.125-22.62-9.375l-128-128C35.13 272.4 32 264.2 32 256c0-18.28 14.95-32 32-32 8.188 0 16.38 3.125 22.62 9.375L192 338.8l233.4-233.4c6.2-6.27 14.4-9.4 22.6-9.4 17.1 0 32 13.7 32 32z"
+                  />
+                </svg>
+              </button>
+              <button @click="cancelEdit" class="form-btn-expand">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="svg-style rotate-45"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M28 14H18V4a2 2 0 0 0-4 0v10H4a2 2 0 0 0 0 4h10v10a2 2 0 0 0 4 0V18h10a2 2 0 0 0 0-4z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </form>
         </template>
         <template v-else>
           <div class="team-container">
             <template v-if="expandTeamsId === team.team_id">
-              <h3 class="underline">{{ team.official_name }}</h3>
-              <h3 class="italic">{{ team.team_name }}</h3>
               <h3>
-                Country code:
+                <span class="h3-title">Official Name:</span
+                ><span class="underline">{{ team.official_name }}</span>
+              </h3>
+              <h3>
+                <span class="h3-title">Team Name:</span
+                ><span class="italic">{{ team.team_name }}</span>
+              </h3>
+              <h3>
+                <span class="h3-title">Country code:</span>
                 <span class="font-bold">{{ team.country_code }}</span>
               </h3>
-              <h3>Abbreviation: {{ team.abbreviation }}</h3>
               <h3>
-                Sport:
-                {{
-                  sports.find((s) => s.sport_id === team.sport_id)?.sport_name
-                }}
+                <span class="h3-title">Abbreviation:</span
+                ><span>{{ team.abbreviation }}</span>
+              </h3>
+              <h3>
+                <span class="h3-title">Sport:</span>
+                <span>
+                  {{
+                    sports.find((s) => s.sport_id === team.sport_id)?.sport_name
+                  }}
+                </span>
               </h3>
             </template>
             <template v-else>
@@ -175,8 +199,8 @@ const saveEdit = async (id) => {
               @click="expandTeams(team)"
               :class="
                 expandTeamsId === team.team_id
-                  ? 'form-button-expand'
-                  : 'form-button'
+                  ? 'form-btn-expand'
+                  : 'form-btn'
               "
             >
               <svg
@@ -192,8 +216,8 @@ const saveEdit = async (id) => {
               @click="startEditing(team)"
               :class="
                 expandTeamsId === team.team_id
-                  ? 'form-button-expand'
-                  : 'form-button'
+                  ? 'form-btn-expand'
+                  : 'form-btn'
               "
             >
               <svg
@@ -210,7 +234,7 @@ const saveEdit = async (id) => {
               </svg>
             </button>
             <template v-if="expandTeamsId !== team.team_id">
-              <button @click="deleteTeams(team.team_id)" class="form-button">
+              <button @click="deleteTeams(team.team_id)" class="form-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                   <g data-name="Layer 2">
                     <path
@@ -228,46 +252,11 @@ const saveEdit = async (id) => {
         </template>
       </div>
     </section>
-    <section class="add-btn-container">
+    <section class="add-btn-container-large">
       <div
-        class="input-container"
-        :class="newTeamForm ? 'input-container-show' : 'input-container-hidden'"
-      >
-        <form class="form-container" @submit.prevent="onSubmit">
-          <label>Official Name</label>
-          <input type="text" v-model="officialName" class="my-input" required />
-
-          <label>Team Name</label>
-          <input type="text" v-model="teamName" class="my-input" required />
-
-          <label>Country Code</label>
-          <input
-            type="text"
-            v-model="countryCode"
-            class="my-input"
-            maxlength="3"
-            required
-          />
-
-          <label>Sport</label>
-          <select v-model="sportId" class="my-input" required>
-            <option disabled value="">Select a sport</option>
-            <option
-              v-for="sport in sports"
-              :key="sport.sport_id"
-              :value="sport.sport_id"
-            >
-              {{ sport.sport_name }}
-            </option>
-          </select>
-
-          <button type="submit" class="my-input-submit">Submit</button>
-        </form>
-      </div>
-      <div
-        class="plus-btn-container"
+        class="plus-btn-container-large"
         @click="newTeamForm = !newTeamForm"
-        :class="[newTeamForm ? 'plus-btn-show' : 'plus-btn-hidden']"
+        :class="[newTeamForm ? 'plus-btn-large-show' : 'plus-btn-large-hidden']"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -278,6 +267,72 @@ const saveEdit = async (id) => {
             d="M28 14H18V4a2 2 0 0 0-4 0v10H4a2 2 0 0 0 0 4h10v10a2 2 0 0 0 4 0V18h10a2 2 0 0 0 0-4z"
           />
         </svg>
+      </div>
+      <div
+        class="input-container-large"
+        :class="
+          newTeamForm
+            ? 'input-container-large-show'
+            : 'input-container-large-hidden'
+        "
+      >
+        <form class="form-container-large" @submit.prevent="onSubmit">
+          <div class="form-container-large-row">
+            <label>Official Name</label>
+            <input
+              type="text"
+              v-model="officialName"
+              class="my-input-large"
+              required
+            />
+          </div>
+
+          <div class="form-container-large-row">
+            <label>Team Name</label>
+            <input
+              type="text"
+              v-model="teamName"
+              class="my-input-large"
+              required
+            />
+          </div>
+
+          <div class="form-container-large-row">
+            <label>Country Code</label>
+            <input
+              type="text"
+              v-model="countryCode"
+              class="my-input-large"
+              maxlength="3"
+              required
+            />
+          </div>
+          <div class="form-container-large-row">
+            <label>Abbreviation</label>
+            <input
+              type="text"
+              v-model="abbreviation"
+              class="my-input-large"
+              required
+              maxlength="3"
+            />
+          </div>
+          <div class="form-container-large-row">
+            <label>Sport</label>
+            <select v-model="sportId" class="my-input-large" required>
+              <option disabled value="">Select a sport</option>
+              <option
+                v-for="sport in sports"
+                :key="sport.sport_id"
+                :value="sport.sport_id"
+              >
+                {{ sport.sport_name }}
+              </option>
+            </select>
+          </div>
+
+          <button type="submit" class="my-input-submit-large">Submit</button>
+        </form>
       </div>
     </section>
   </section>

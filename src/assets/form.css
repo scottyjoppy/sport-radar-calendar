@@ -14,6 +14,11 @@ h3 {
   text-transform: capitalize;
 }
 
+.h3-title {
+  color: var(--grey-dark);
+  margin-right: 1rem;
+}
+
 .form-section-container {
   display: flex;
   flex-direction: column;
@@ -56,18 +61,26 @@ h3 {
   fill: var(--off-white);
 }
 
-.form-button {
+.edit-team-form-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.form-btn {
   display: flex;
   width: 2.5rem;
+  aspect-ratio: 1/1;
   justify-content: center;
   align-items: center;
   color: var(--off-black);
   transition: all 100ms;
 }
 
-.form-button-expand {
+.form-btn-expand {
   display: flex;
   width: 2.5rem;
+  height: 2.5rem;
   justify-content: center;
   align-items: center;
   color: var(--off-black);
@@ -76,37 +89,37 @@ h3 {
   margin-right: 1rem;
 }
 
-.form-button-expand:hover {
+.form-btn-expand:hover {
   cursor: pointer;
   background-color: var(--off-white);
 }
 
-.form-button-expand:hover > svg {
+.form-btn-expand:hover > svg {
   fill: var(--grey);
 }
 
-.form-button:last-child {
+.form-btn:last-child {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 
-.form-button:last-child:hover > * {
+.form-btn:last-child:hover > * {
   fill: var(--secondary);
 }
 
-.form-button > svg,
-.form-button-expand > svg {
+.form-btn > svg,
+.form-btn-expand > svg {
   height: 40%;
   fill: var(--off-black);
   transition: all 100ms;
 }
 
-.form-button:hover {
+.form-btn:hover {
   cursor: pointer;
   background-color: var(--off-white);
 }
 
-.form-button:hover > svg {
+.form-btn:hover > svg {
   fill: var(--grey);
 }
 
@@ -115,7 +128,7 @@ h3 {
   color: var(--off-black);
   outline: none;
   padding: 0 8px;
-  border-radius: 8px;
+  border-radius: 4px;
   margin: 4px 0;
 }
 
@@ -123,7 +136,6 @@ h3 {
   margin: 8px 0;
   display: flex;
   flex-direction: column;
-  text-align: center;
 }
 
 .team-container {
@@ -147,7 +159,7 @@ h3 {
 
 .add-btn-container {
   display: flex;
-  height: 2.5rem;
+  height: 100%;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -179,7 +191,7 @@ h3 {
   justify-content: space-evenly;
   align-items: center;
   gap: 1rem;
-  padding: 0 1rem;
+  padding: 4px 1rem;
   background-color: var(--primary-light);
   color: var(--off-white);
 }
@@ -188,8 +200,8 @@ h3 {
   background-color: var(--primary-lighter);
   color: var(--primary);
   outline: none;
-  padding: 0 8px;
-  border-radius: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
 .my-input::placeholder {
@@ -210,10 +222,16 @@ h3 {
   cursor: pointer;
 }
 .plus-btn-container {
-  height: 100%;
   display: flex;
-  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  aspect-ratio: 1/1;
   transition: all 500ms;
+}
+
+.plus-btn-container > svg {
+  width: 1rem;
 }
 
 .plus-btn-container:hover {
@@ -256,4 +274,129 @@ h3 {
 
 .svg-style {
   transition: all 200ms;
+}
+
+/* ------------------------- */
+
+.add-btn-container-large {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container-large {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1rem;
+  background-color: var(--primary-light);
+  color: var(--off-white);
+}
+
+.form-container-large-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+
+.form-container-large label {
+  text-decoration: underline;
+}
+
+.input-container-large {
+  max-height: 0;
+  max-width: 50%;
+  transition: all 500ms ease-in-out;
+  overflow: hidden;
+}
+
+.input-container-large-hidden {
+  opacity: 0;
+  border-radius: 1rem;
+}
+
+.input-container-large-show {
+  max-height: 30rem;
+  opacity: 100%;
+  border-radius: 1rem;
+}
+.plus-btn-container-large {
+  height: 100%;
+  display: flex;
+  padding: 8px;
+  transition: all 500ms;
+}
+
+.plus-btn-container-large > svg {
+  width: 1rem;
+}
+
+.plus-btn-container-large:hover {
+  cursor: pointer;
+}
+
+.plus-btn-large-show {
+  border-radius: 50% 50% 0 0;
+  background-color: var(--primary-light);
+}
+
+.plus-btn-large-show:hover {
+  background-color: var(--primary-dark);
+}
+
+.plus-btn-large-show > * {
+  fill: var(--secondary);
+}
+
+.plus-btn-large-show:hover > * {
+  fill: var(--off-white);
+}
+
+.plus-btn-large-hidden {
+  border-radius: 50%;
+  background-color: var(--grey-light);
+}
+
+.plus-btn-large-hidden:hover {
+  background-color: var(--grey);
+}
+
+.plus-btn-large-hidden > * {
+  fill: var(--grey);
+}
+
+.plus-btn-large-hidden:hover > * {
+  fill: var(--primary);
+}
+
+.my-input-large {
+  background-color: var(--primary-lighter);
+  color: var(--primary);
+  outline: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.my-input-large::placeholder {
+  font-style: italic;
+}
+
+.my-input-submit-large {
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding: 1px 1rem;
+  border-radius: 8px 8px 8px 8px;
+  transition: all 100ms;
+  grid-column: span 2;
+}
+
+.my-input-submit-large:hover {
+  background-color: var(--primary-dark);
+  color: var(--off-white);
+  cursor: pointer;
 }

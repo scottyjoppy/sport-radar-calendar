@@ -1,6 +1,5 @@
 <script setup>
-import { getEvents } from "@/composables/getSupabase";
-import { onMounted, ref, watch } from "vue";
+import { ref } from "vue";
 
 const date = ref(new Date());
 const openEventId = ref(null);
@@ -9,16 +8,6 @@ const events = ref([]);
 const toggleDetails = (id) => {
   openEventId.value = openEventId.value === id ? null : id;
 };
-
-onMounted(async () => {
-  events.value = await getEvents();
-});
-
-watch(date, async (newDate) => {
-  events.value = await getEvents({
-    event_day: newDate.toISOString(),
-  });
-});
 </script>
 
 <template>
