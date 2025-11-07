@@ -1,15 +1,12 @@
 <script setup>
-import { useSports } from "@/composables/useSports";
 import { useTeams } from "@/composables/useTeams";
 import { computed, ref } from "vue";
 
 const { updateTeams, deleteTeams, addTeams, teams } = useTeams();
-const { sports } = useSports();
 
 const teamName = ref("");
 const officialName = ref("");
 const countryCode = ref("");
-const sportId = ref("");
 const abbreviation = ref("");
 
 const editingId = ref(null);
@@ -20,7 +17,6 @@ const editedTeam = ref({
   official_name: "",
   team_name: "",
   country_code: "",
-  sport_id: "",
   abbreviation: "",
 });
 
@@ -33,7 +29,6 @@ const onSubmit = async () => {
     !teamName.value.trim() ||
     !officialName.value.trim() ||
     !countryCode.value ||
-    !sportId.value ||
     !abbreviation.value
   )
     return;
@@ -42,18 +37,14 @@ const onSubmit = async () => {
     team_name: teamName.value.toLowerCase(),
     official_name: officialName.value,
     country_code: countryCode.value.toUpperCase(),
-    sport_id: sportId.value,
     abbreviation: abbreviation.value.toUpperCase(),
   };
-
-  console.log(newTeam);
 
   await addTeams(newTeam);
 
   teamName.value = "";
   officialName.value = "";
   countryCode.value = "";
-  sportId.value = "";
   abbreviation.value = "";
   newTeamForm.value = false;
 };
@@ -78,7 +69,6 @@ const saveEdit = async (id) => {
     team_name: editedTeam.value.team_name.toLowerCase(),
     official_name: editedTeam.value.official_name,
     country_code: editedTeam.value.country_code.toUpperCase(),
-    sport_id: editedTeam.value.sport_id,
     abbreviation: editedTeam.value.abbreviation.toUpperCase(),
   });
   editingId.value = null;
@@ -94,51 +84,48 @@ const saveEdit = async (id) => {
       <div v-for="team in sortedTeams" :key="team.team_id" class="items-row">
         <template v-if="editingId === team.team_id">
           <form
-            class="edit-team-form-container"
+            class="edit-form-container"
             @submit.prevent="saveEdit(team.team_id)"
           >
-            <div class="edit-team-form">
-              <label class="underline">Official Name</label>
-              <input
-                v-model="editedTeam.official_name"
-                placeholder="Official Name"
-                class="form-input"
-                required
-              />
-              <label class="underline">Team Name</label>
-              <input
-                v-model="editedTeam.team_name"
-                placeholder="Team Name"
-                class="form-input"
-                required
-              />
-              <label class="underline">Country Code</label>
-              <input
-                v-model="editedTeam.country_code"
-                placeholder="Country Code"
-                maxlength="3"
-                class="form-input"
-                required
-              />
-              <label class="underline">Abbreviation</label>
-              <input
-                v-model="editedTeam.abbreviation"
-                placeholder="Abbreviation"
-                maxlength="3"
-                class="form-input"
-                required
-              />
-              <label class="underline">Sport</label>
-              <select v-model="editedTeam.sport_id" class="form-input">
-                <option
-                  v-for="sport in sports"
-                  :key="sport.sport_id"
-                  :value="sport.sport_id"
+            <div class="edit-form">
+              <div class="edit-form-row">
+                <label class="underline">Official Name</label>
+                <input
+                  v-model="editedTeam.official_name"
+                  placeholder="Official Name"
+                  class="form-input"
                   required
-                >
-                  {{ sport.sport_name }}
-                </option>
-              </select>
+                />
+              </div>
+              <div class="edit-form-row">
+                <label class="underline">Team Name</label>
+                <input
+                  v-model="editedTeam.team_name"
+                  placeholder="Team Name"
+                  class="form-input"
+                  required
+                />
+              </div>
+              <div class="edit-form-row">
+                <label class="underline">Country Code</label>
+                <input
+                  v-model="editedTeam.country_code"
+                  placeholder="Country Code"
+                  maxlength="3"
+                  class="form-input"
+                  required
+                />
+              </div>
+              <div class="edit-form-row">
+                <label class="underline">Abbreviation</label>
+                <input
+                  v-model="editedTeam.abbreviation"
+                  placeholder="Abbreviation"
+                  maxlength="3"
+                  class="form-input"
+                  required
+                />
+              </div>
             </div>
             <div class="form-btn-container">
               <button class="form-btn-expand" type="submit">
@@ -163,7 +150,7 @@ const saveEdit = async (id) => {
           </form>
         </template>
         <template v-else>
-          <div class="team-container">
+          <div class="data-container">
             <template v-if="expandTeamsId === team.team_id">
               <h3>
                 <span class="h3-title">Official Name:</span
@@ -174,20 +161,12 @@ const saveEdit = async (id) => {
                 ><span class="italic">{{ team.team_name }}</span>
               </h3>
               <h3>
-                <span class="h3-title">Country code:</span>
-                <span class="font-bold">{{ team.country_code }}</span>
-              </h3>
-              <h3>
                 <span class="h3-title">Abbreviation:</span
                 ><span>{{ team.abbreviation }}</span>
               </h3>
               <h3>
-                <span class="h3-title">Sport:</span>
-                <span>
-                  {{
-                    sports.find((s) => s.sport_id === team.sport_id)?.sport_name
-                  }}
-                </span>
+                <span class="h3-title">Country code:</span>
+                <span class="font-bold">{{ team.country_code }}</span>
               </h3>
             </template>
             <template v-else>
@@ -198,9 +177,7 @@ const saveEdit = async (id) => {
             <button
               @click="expandTeams(team)"
               :class="
-                expandTeamsId === team.team_id
-                  ? 'form-btn-expand'
-                  : 'form-btn'
+                expandTeamsId === team.team_id ? 'form-btn-expand' : 'form-btn'
               "
             >
               <svg
@@ -215,9 +192,7 @@ const saveEdit = async (id) => {
             <button
               @click="startEditing(team)"
               :class="
-                expandTeamsId === team.team_id
-                  ? 'form-btn-expand'
-                  : 'form-btn'
+                expandTeamsId === team.team_id ? 'form-btn-expand' : 'form-btn'
               "
             >
               <svg
@@ -317,20 +292,6 @@ const saveEdit = async (id) => {
               maxlength="3"
             />
           </div>
-          <div class="form-container-large-row">
-            <label>Sport</label>
-            <select v-model="sportId" class="my-input-large" required>
-              <option disabled value="">Select a sport</option>
-              <option
-                v-for="sport in sports"
-                :key="sport.sport_id"
-                :value="sport.sport_id"
-              >
-                {{ sport.sport_name }}
-              </option>
-            </select>
-          </div>
-
           <button type="submit" class="my-input-submit-large">Submit</button>
         </form>
       </div>

@@ -34,13 +34,16 @@ h3 {
   margin: 1rem 0;
 }
 
+.data-container {
+  padding-left: 1rem;
+}
+
 .items-row {
   width: clamp(25%, 25rem, 50%);
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 1rem;
   border-radius: 1rem;
 }
 
@@ -55,16 +58,28 @@ h3 {
 
 .form-btn-container {
   display: flex;
+  gap: 4px;
 }
 
 .items-row:nth-child(odd) svg {
   fill: var(--off-white);
 }
 
-.edit-team-form-container {
+.edit-form-container {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 2rem;
+  flex-direction: column;
+  padding-bottom: 4px;
+}
+
+.edit-form-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+  border-bottom: 1px dashed var(--grey-dark);
 }
 
 .form-btn {
@@ -86,7 +101,6 @@ h3 {
   color: var(--off-black);
   transition: all 100ms;
   border-radius: 8px;
-  margin-right: 1rem;
 }
 
 .form-btn-expand:hover {
@@ -129,11 +143,18 @@ h3 {
   outline: none;
   padding: 0 8px;
   border-radius: 4px;
-  margin: 4px 0;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
-.edit-team-form {
+.edit-row {
+  margin-left: 1rem;
+}
+
+.edit-form {
+  width: 100%;
   margin: 8px 0;
+  padding: 0 1rem;
   display: flex;
   flex-direction: column;
 }

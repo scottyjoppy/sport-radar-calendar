@@ -50,16 +50,16 @@ const saveEdit = async (id) => {
         class="items-row"
       >
         <template v-if="editingId === sport.sport_id">
-          <input type="text" v-model="editedName" class="form-input" title/>
+          <input type="text" v-model="editedName" class="form-input edit-row" title/>
           <div class="form-btn-container">
-            <button @click="saveEdit(sport.sport_id)" class="form-button">
+            <button @click="saveEdit(sport.sport_id)" class="form-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
                   d="M480 128c0 8.188-3.125 16.38-9.375 22.62l-256 256C208.4 412.9 200.2 416 192 416s-16.38-3.125-22.62-9.375l-128-128C35.13 272.4 32 264.2 32 256c0-18.28 14.95-32 32-32 8.188 0 16.38 3.125 22.62 9.375L192 338.8l233.4-233.4c6.2-6.27 14.4-9.4 22.6-9.4 17.1 0 32 13.7 32 32z"
                 />
               </svg>
             </button>
-            <button @click="cancelEdit" class="form-button">
+            <button @click="cancelEdit" class="form-btn">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="svg-style rotate-45"
@@ -73,9 +73,9 @@ const saveEdit = async (id) => {
           </div>
         </template>
         <template v-else>
-          <h3>{{ sport.sport_name }}</h3>
+          <h3 class="data-container">{{ sport.sport_name }}</h3>
           <div class="form-btn-container">
-            <button @click="startEditing(sport)" class="form-button">
+            <button @click="startEditing(sport)" class="form-btn">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -89,7 +89,7 @@ const saveEdit = async (id) => {
                 />
               </svg>
             </button>
-            <button @click="deleteSports(sport.sport_id)" class="form-button">
+            <button @click="deleteSports(sport.sport_id)" class="form-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                 <g data-name="Layer 2">
                   <path

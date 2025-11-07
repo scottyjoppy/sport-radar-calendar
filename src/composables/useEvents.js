@@ -48,7 +48,7 @@ export function useEvents() {
       console.error("Delete failed:", error);
       return;
     }
-    events.value = events.value.filter((e) => e.id !== id);
+    events.value = events.value.filter((e) => e.event_id !== id);
   };
 
   onMounted(() => {
