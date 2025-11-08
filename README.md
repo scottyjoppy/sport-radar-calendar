@@ -1,38 +1,45 @@
-# sport-radar-calendar
+# Sport Radar Calendar
 
-This template should help get you started developing with Vue 3 in Vite.
+***sport-radar-calendar*** is an interactive web application that displays and manages various sporting events through a dynamic calendar interface. 
 
-## Recommended IDE Setup
+## Description
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Sport Radar Calendar allows users to create, edit, and manage data related to sporting events. The app includes dedicated pages for managing data tables such as **Events**, **Tournaments**, **Teams**, **Sports**, and **Venues**.
 
-## Recommended Browser Setup
+## Installation
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+Clone the repository:
+```bash
+git clone https://github.com/scottyjoppy/sport-radar-calendar.git
+```
+Install dependencies:
+```bash
 npm install
 ```
+## Usage
 
-### Compile and Hot-Reload for Development
-
-```sh
+To start the development server, run:
+```bash
 npm run dev
 ```
 
-### Compile and Minify for Production
+## Tech Stack
 
-```sh
-npm run build
-```
+- **Languages:** HTML, CSS, JavaScript
+
+- **Framework:** Vue.js
+
+- **Database:** PostgreSQL (*managed via Supabase*)
+
+## Edge Cases
+
+- Forms provide alerts for issues such as:
+    - Duplicate names
+    - Deletion of foreign key references
+    - Missing required values
+- Calendar grid expands or contracts based on the amount of rows needed.
+- Calendar displays valid days per month including leap years.
+
+## Relational Diagram
+
+![Relational Diagram](/public/relational_diagram.jpg)
