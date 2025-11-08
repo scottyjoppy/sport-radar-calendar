@@ -20,9 +20,10 @@ export function useSports() {
       .select();
     if (error) {
       console.error("Insert failed:", error);
-      return;
+      return { success: false, error };
     }
     sports.value.push(data[0]);
+    return { success: true, data: data[0] };
   };
 
   const updateSports = async (id, updatedFields) => {
@@ -33,13 +34,14 @@ export function useSports() {
       .select();
     if (error) {
       console.error("Update failed:", error);
-      return;
+      return { success: false, error };
     }
     if (data && data.length) {
       sports.value = sports.value
         .filter((e) => e.sport_id !== id)
         .concat(data[0]);
     }
+    return { success: true, data: data[0] };
   };
 
   const deleteSports = async (id) => {

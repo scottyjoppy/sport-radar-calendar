@@ -2,6 +2,8 @@
 import { RouterLink } from "vue-router";
 </script>
 
+<style scoped src="/src/assets/navbar.css"></style>
+
 <template>
   <nav
     class="flex justify-between items-center uppercase text-(--off-white) font-bold bg-(--primary) h-20 p-3"
@@ -14,9 +16,10 @@ import { RouterLink } from "vue-router";
       />
     </RouterLink>
     <div class="flex gap-3">
-      <RouterLink class="nav-link" to="/calendar">Calendar</RouterLink>
+      <RouterLink class="nav-link" to="/">Calendar</RouterLink>
       <RouterLink class="nav-link" to="/events">Events</RouterLink>
       <RouterLink class="nav-link" to="/teams">Teams</RouterLink>
+      <RouterLink class="nav-link" to="/tournaments">Tournaments</RouterLink>
       <RouterLink class="nav-link" to="/sports">Sports</RouterLink>
       <RouterLink class="nav-link" to="/venues">Venues</RouterLink>
     </div>

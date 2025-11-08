@@ -20,9 +20,10 @@ export function useTournaments() {
       .select();
     if (error) {
       console.error("Insert failed:", error);
-      return;
+      return { success: false, error };
     }
     tournaments.value.push(data[0]);
+    return { success: true, data: data[0] };
   };
 
   const updateTournaments = async (id, updatedFields) => {
@@ -33,13 +34,14 @@ export function useTournaments() {
       .select();
     if (error) {
       console.error("Update failed:", error);
-      return;
+      return { success: false, error };
     }
     if (data && data.length) {
       tournaments.value = tournaments.value
         .filter((e) => e.tournament_id !== id)
         .concat(data[0]);
     }
+    return { success: true, data: data[0] };
   };
 
   const deleteTournaments = async (id) => {

@@ -40,7 +40,12 @@ const onSubmit = async () => {
     abbreviation: abbreviation.value.toUpperCase(),
   };
 
-  await addTeams(newTeam);
+  const result = await addTeams(newTeam);
+
+  if (!result.success) {
+    alert(`Failed to add: ${result.error.message}`);
+    return;
+  }
 
   teamName.value = "";
   officialName.value = "";
@@ -65,12 +70,18 @@ const startEditing = (team) => {
 
 const saveEdit = async (id) => {
   if (!editedTeam.value.team_name.trim()) return;
-  await updateTeams(id, {
+  const result = await updateTeams(id, {
     team_name: editedTeam.value.team_name.toLowerCase(),
     official_name: editedTeam.value.official_name,
     country_code: editedTeam.value.country_code.toUpperCase(),
     abbreviation: editedTeam.value.abbreviation.toUpperCase(),
   });
+
+  if (!result.success) {
+    alert(`Failed to update: ${result.error.message}`);
+    return;
+  }
+
   editingId.value = null;
 };
 </script>
@@ -78,11 +89,15 @@ const saveEdit = async (id) => {
 <style scoped src="/src/assets/form.css"></style>
 
 <template>
+  <!-- Full Form -->
   <section class="form-section-container">
     <h1>Teams</h1>
+    <!-- Existing Data -->
     <section class="items-table">
       <div v-for="team in sortedTeams" :key="team.team_id" class="items-row">
+        <!-- View Editing -->
         <template v-if="editingId === team.team_id">
+          <!-- Update Form -->
           <form
             class="edit-form-container"
             @submit.prevent="saveEdit(team.team_id)"
@@ -149,8 +164,10 @@ const saveEdit = async (id) => {
             </div>
           </form>
         </template>
+        <!-- View Not Editing -->
         <template v-else>
           <div class="data-container">
+            <!-- View Expanded -->
             <template v-if="expandTeamsId === team.team_id">
               <h3>
                 <span class="h3-title">Official Name:</span
@@ -169,10 +186,12 @@ const saveEdit = async (id) => {
                 <span class="font-bold">{{ team.country_code }}</span>
               </h3>
             </template>
+            <!-- View Not Expanded -->
             <template v-else>
               <h3>{{ team.team_name }}</h3>
             </template>
           </div>
+          <!-- Buttons -->
           <div class="form-btn-container">
             <button
               @click="expandTeams(team)"
@@ -227,6 +246,7 @@ const saveEdit = async (id) => {
         </template>
       </div>
     </section>
+    <!-- Add New Form -->
     <section class="add-btn-container-large">
       <div
         class="plus-btn-container-large"
@@ -258,6 +278,7 @@ const saveEdit = async (id) => {
               type="text"
               v-model="officialName"
               class="my-input-large"
+              placeholder="Official Name"
               required
             />
           </div>
@@ -268,6 +289,7 @@ const saveEdit = async (id) => {
               type="text"
               v-model="teamName"
               class="my-input-large"
+              placeholder="Team Name"
               required
             />
           </div>
@@ -279,15 +301,17 @@ const saveEdit = async (id) => {
               v-model="countryCode"
               class="my-input-large"
               maxlength="3"
+              placeholder="Country Code"
               required
-            />
-          </div>
-          <div class="form-container-large-row">
-            <label>Abbreviation</label>
-            <input
+              />
+            </div>
+            <div class="form-container-large-row">
+              <label>Abbreviation</label>
+              <input
               type="text"
               v-model="abbreviation"
               class="my-input-large"
+              placeholder="Abbreviation"
               required
               maxlength="3"
             />

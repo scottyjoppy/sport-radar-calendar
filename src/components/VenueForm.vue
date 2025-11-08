@@ -16,7 +16,12 @@ const sortedVenues = computed(() => {
 const onSubmit = async () => {
   if (!venueName.value.trim()) return;
   const newVenue = { venue_name: venueName.value.toLowerCase() };
-  await addVenues(newVenue);
+  const result = await addVenues(newVenue);
+
+  if (!result.success) {
+    alert(`Failed to add: ${result.error.message}`);
+    return;
+  }
 
   venueName.value = "";
   newVenueForm.value = false;
@@ -33,7 +38,15 @@ const cancelEdit = () => {
 
 const saveEdit = async (id) => {
   if (!editedName.value.trim()) return;
-  await updateVenues(id, { venue_name: editedName.value.toLowerCase() });
+  const result = await updateVenues(id, {
+    venue_name: editedName.value.toLowerCase(),
+  });
+
+  if (!result.success) {
+    alert(`Failed to update: ${result.error.message}`);
+    return;
+  }
+
   editingId.value = null;
 };
 </script>
@@ -41,21 +54,26 @@ const saveEdit = async (id) => {
 <style scoped src="/src/assets/form.css"></style>
 
 <template>
+  <!-- Full Form -->
   <section class="form-section-container">
     <h1>Venues</h1>
+    <!-- Existing Data -->
     <section class="items-table">
       <div
         v-for="venue in sortedVenues"
         :key="venue.venue_id"
         class="items-row"
       >
+        <!-- View Editing -->
         <template v-if="editingId === venue.venue_id">
+          <!-- Update Form -->
           <input
             type="text"
             v-model="editedName"
             class="form-input edit-row"
             title
           />
+          <!-- Form Button -->
           <div class="form-btn-container">
             <button @click="saveEdit(venue.venue_id)" class="form-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -77,8 +95,10 @@ const saveEdit = async (id) => {
             </button>
           </div>
         </template>
+        <!-- View Not Editing -->
         <template v-else>
           <h3 class="data-container">{{ venue.venue_name }}</h3>
+          <!-- Buttons -->
           <div class="form-btn-container">
             <button @click="startEditing(venue)" class="form-btn">
               <svg
@@ -111,6 +131,7 @@ const saveEdit = async (id) => {
         </template>
       </div>
     </section>
+    <!-- Add New Form -->
     <section class="add-btn-container">
       <div
         class="input-container"

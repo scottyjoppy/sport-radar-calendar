@@ -20,9 +20,10 @@ export function useEvents() {
       .select();
     if (error) {
       console.error("Insert failed:", error);
-      return;
+      return { success: false, error };
     }
     events.value.push(data[0]);
+    return { success: true, data: data[0] };
   };
 
   const updateEvents = async (id, updatedFields) => {
@@ -33,13 +34,14 @@ export function useEvents() {
       .select();
     if (error) {
       console.error("Update failed:", error);
-      return;
+      return {success: false, error };
     }
     if (data && data.length) {
       events.value = events.value
         .filter((e) => e.event_id !== id)
         .concat(data[0]);
     }
+    return { success: true, data: data[0]}
   };
 
   const deleteEvents = async (id) => {

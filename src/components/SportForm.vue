@@ -16,7 +16,12 @@ const sortedSports = computed(() => {
 const onSubmit = async () => {
   if (!sportName.value.trim()) return;
   const newSport = { sport_name: sportName.value.toLowerCase() };
-  await addSports(newSport);
+  const result = await addSports(newSport);
+
+  if (!result.success) {
+    alert(`Failed to add: ${result.error.message}`);
+    return;
+  }
 
   sportName.value = "";
   newSportForm.value = false;
@@ -33,7 +38,15 @@ const cancelEdit = () => {
 
 const saveEdit = async (id) => {
   if (!editedName.value.trim()) return;
-  await updateSports(id, { sport_name: editedName.value.toLowerCase() });
+  const result = await updateSports(id, {
+    sport_name: editedName.value.toLowerCase(),
+  });
+
+  if (!result.success) {
+    alert(`Failed to update: ${result.error.message}`);
+    return;
+  }
+
   editingId.value = null;
 };
 </script>
@@ -41,16 +54,26 @@ const saveEdit = async (id) => {
 <style scoped src="/src/assets/form.css"></style>
 
 <template>
+  <!-- Full Form -->
   <section class="form-section-container">
     <h1>Sports</h1>
+    <!-- Existing Data -->
     <section class="items-table">
       <div
         v-for="sport in sortedSports"
         :key="sport.sport_id"
         class="items-row"
       >
+        <!-- View Editing -->
         <template v-if="editingId === sport.sport_id">
-          <input type="text" v-model="editedName" class="form-input edit-row" title/>
+          <!-- Update Form -->
+          <input
+            type="text"
+            v-model="editedName"
+            class="form-input edit-row"
+            title
+          />
+          <!-- Form Button -->
           <div class="form-btn-container">
             <button @click="saveEdit(sport.sport_id)" class="form-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -72,8 +95,10 @@ const saveEdit = async (id) => {
             </button>
           </div>
         </template>
+        <!-- View Not Editing -->
         <template v-else>
           <h3 class="data-container">{{ sport.sport_name }}</h3>
+          <!-- Buttons -->
           <div class="form-btn-container">
             <button @click="startEditing(sport)" class="form-btn">
               <svg
@@ -106,6 +131,7 @@ const saveEdit = async (id) => {
         </template>
       </div>
     </section>
+    <!-- Add New Form -->
     <section class="add-btn-container">
       <div
         class="input-container"
