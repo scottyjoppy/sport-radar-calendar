@@ -1,0 +1,301 @@
+.combined-calendar-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin: 4rem 0;
+  gap: 5px;
+  padding: 0 1rem;
+  height: clamp(50vh, 40rem, 80vh);
+  aspect-ratio: 2/1;
+  place-self: center;
+}
+
+.calendar-grid {
+  font-size: clamp(12px, 1vw, 2rem);
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  height: 100%;
+}
+
+.calendar-grid > *:nth-child(7n + 1) {
+  border-left: 1px solid var(--grey);
+}
+.calendar-grid > :nth-last-child(-n + 7) {
+  /* border-bottom: 1px solid var(--grey); */
+  box-shadow: inset 0 -1px 0 0 var(--grey);
+}
+
+.calendar-side-bar {
+  border: 1px solid var(--grey);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.calendar-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-top: 1px solid var(--grey);
+  border-right: 1px solid var(--grey);
+  color: var(--off-black);
+  background: var(--off-white);
+  transition: background-color 0.3s;
+}
+
+.calendar-cell:hover {
+  background: var(--grey-light);
+  color: var(--primary);
+  font-weight: bolder;
+}
+
+.calendar-cell-date {
+  text-align: center;
+  width: 100%;
+  font-size: larger;
+}
+
+.calendar-day {
+  display: flex;
+  border-top: 1px solid var(--grey);
+  border-right: 1px solid var(--grey);
+  justify-content: center;
+  align-items: center;
+  color: var(--off-black);
+  background: var(--off-white);
+  transition: all 0.3s;
+}
+
+.calendar-grid > :nth-child(7) {
+  border-top-right-radius: 5px;
+}
+.calendar-grid > :nth-last-child(1) {
+  border-bottom-right-radius: 5px;
+}
+
+.calendar-day .full {
+  display: none;
+}
+
+.calendar-day .abbr {
+  text-transform: uppercase;
+  display: inline;
+}
+
+@media (min-width: 768px) {
+  .calendar-day .full {
+    display: inline;
+  }
+
+  .calendar-day .abbr {
+    display: none;
+  }
+}
+
+.event-item:nth-child(even) {
+  background-color: var(--grey-light);
+}
+
+.event-item:nth-child(odd) {
+  background-color: var(--grey);
+}
+
+.event-item-title {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 1px 1rem;
+}
+
+.dot-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.dot-container > :nth-child(odd) {
+  background-color: var(--primary-light);
+}
+
+.dot-container > :nth-child(even) {
+  background-color: var(--secondary);
+}
+
+.dot {
+  height: 12px;
+  aspect-ratio: 1 / 1;
+  display: inline-block;
+  margin: 1px;
+  border-radius: 50%;
+}
+
+.side-bar-top-container {
+  height: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1rem;
+  border-bottom: 1px solid var(--grey);
+  overflow: hidden;
+  background-color: var(--grey-light);
+}
+
+.current-day-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.top-btn-container {
+  display: flex;
+  justify-content: end;
+  height: 100%;
+  width: 40%;
+}
+
+.selector-btn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  transition: all 100ms;
+  background-color: var(--grey-light);
+}
+
+.selector-btn svg {
+  height: 100%;
+  fill: var(--grey);
+  rotate: 90deg;
+}
+
+.selector-btn:nth-child(even) {
+  rotate: -180deg;
+}
+
+.selector-btn:hover {
+  background-color: var(--off-white);
+  scale: 105%;
+  cursor: pointer;
+}
+
+.selector-btn:hover > svg {
+  fill: var(--primary);
+}
+
+.event-row {
+  display: flex;
+  justify-content: center;
+  border-radius: 4px;
+  width: 100%;
+  padding: 4px 1rem;
+  transition: all 100ms ease-in-out;
+}
+
+.event-row:hover {
+  scale: 105%;
+  cursor: pointer;
+}
+
+.event-row:nth-child(odd) {
+  background-color: var(--off-black);
+  color: var(--off-white);
+}
+
+.event-row:nth-child(even) {
+  background-color: var(--grey-light);
+  color: var(--off-black);
+}
+
+.side-bar-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.btn-container {
+  display: flex;
+  height: 3rem;
+  padding: 4px;
+}
+
+.switch-btn {
+  height: 100%;
+  stroke: var(--off-black);
+  transition: all 300ms;
+}
+
+.switch-btn:hover {
+  rotate: 180deg;
+  cursor: pointer;
+  stroke: var(--primary-light);
+}
+
+.switch-btn:active {
+  scale: 110%;
+}
+
+.popup-events {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: var(--off-black);
+  color: var(--off-white);
+  padding: 1rem;
+  border-radius: 8px;
+  width: clamp(300px, 10rem, 90%);
+  height: clamp(300px, 15rem, 60vh);
+  transition: opacity 100ms;
+}
+
+.popup-content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.popup-btn {
+  padding: 4px 1rem;
+  background-color: var(--grey-dark);
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: all 100ms;
+}
+
+.popup-btn:hover {
+  background-color: var(--off-white);
+  color: var(--off-black);
+  cursor: pointer;
+}
+
+.popup-title {
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+
+.popup-description {
+  color: var(--grey-dark);
+}
+
+.popup-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed var(--grey);
+}

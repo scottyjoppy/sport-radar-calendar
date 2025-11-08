@@ -306,6 +306,7 @@ h3 {
   width: 100%;
   justify-content: center;
   align-items: center;
+  margin: 1rem 0;
 }
 
 .form-container-large {
@@ -346,6 +347,7 @@ h3 {
   opacity: 100%;
   border-radius: 1rem;
 }
+
 .plus-btn-container-large {
   height: 100%;
   display: flex;
@@ -405,6 +407,7 @@ h3 {
 
 .my-input-large::placeholder {
   font-style: italic;
+  color: var(--primary);
 }
 
 .my-input-submit-large {

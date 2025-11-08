@@ -28,6 +28,7 @@ body {
   background: var(--off-white);
 }
 
+/* TEMP  */
 .simple-button {
   width: 100%;
 }
@@ -44,6 +45,7 @@ body {
 .button-container > :nth-child(odd) {
   background: var(--grey);
 }
+/* TEMP  */
 
 .my-button {
   --p: 100%;
@@ -59,137 +61,10 @@ body {
   transition: 0.4s, background-position 0s;
   outline: none;
 }
+
 .my-button:hover {
   --p: 0%;
   border: 1px solid var(--secondary);
   color: var(--secondary);
   fill: var(--secondary);
-}
-
-.nav-link {
-  font-size: clamp(1rem, 2vw, 3rem);
-  transition: all 0.2s;
-}
-
-.nav-link:hover {
-  cursor: pointer;
-  color: var(--secondary);
-}
-
-.combined-calendar-grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 5px;
-  padding: 0 1rem;
-  width: 100%;
-  height: 50vh;
-}
-
-.calendar-grid {
-  font-size: clamp(12px, 1vw, 2rem);
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  width: 100%;
-  height: 100%;
-}
-
-.calendar-grid > *:nth-child(7n + 1) {
-  border-left: 1px solid var(--grey);
-}
-.calendar-grid > :nth-last-child(-n + 7) {
-  /* border-bottom: 1px solid var(--grey); */
-  box-shadow: inset 0 -1px 0 0 var(--grey);
-}
-
-.calendar-side-bar {
-  border: 1px solid var(--grey);
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.calendar-cell {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  border-top: 1px solid var(--grey);
-  border-right: 1px solid var(--grey);
-  color: var(--off-black);
-  background: var(--off-white);
-  transition: background-color 0.3s;
-}
-
-.calendar-cell:hover {
-  background: var(--grey-light);
-  color: var(--primary);
-  font-weight: bolder;
-}
-
-.calendar-day {
-  display: flex;
-  border-top: 1px solid var(--grey);
-  border-right: 1px solid var(--grey);
-  justify-content: center;
-  align-items: center;
-  color: var(--off-black);
-  background: var(--off-white);
-  transition: all 0.3s;
-}
-
-.calendar-grid > :nth-child(7) {
-  border-top-right-radius: 5px;
-}
-.calendar-grid > :nth-last-child(1) {
-  border-bottom-right-radius: 5px;
-}
-
-.calendar-day .full {
-  display: none;
-}
-
-.calendar-day .abbr {
-  text-transform: uppercase;
-  display: inline;
-}
-
-@media (min-width: 768px) {
-  .calendar-day .full {
-    display: inline;
-  }
-
-  .calendar-day .abbr {
-    display: none;
-  }
-}
-
-.event-item:nth-child(even) {
-  background-color: var(--grey-light);
-}
-
-.event-item:nth-child(odd) {
-  background-color: var(--grey);
-}
-
-.event-item-title {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 1px 1rem;
-}
-
-.dot-container > :nth-child(odd) {
-  background-color: var(--primary-light);
-}
-
-.dot-container > :nth-child(even) {
-  background-color: var(--secondary);
-}
-
-.dot {
-  height: 25%;
-  aspect-ratio: 1 / 1;
-  display: inline-block;
-  margin: 1px;
-  border-radius: 50%;
 }
