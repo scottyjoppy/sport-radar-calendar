@@ -1,0 +1,9 @@
+.nav-link {
+  font-size: clamp(1rem, 2vw, 3rem);
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  cursor: pointer;
+  color: var(--secondary);
+}
