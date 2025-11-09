@@ -176,7 +176,7 @@ const saveEdit = async (id) => {
           <div class="data-container">
             <!-- View Expanded -->
             <template v-if="expandTournamentsId === tournament.tournament_id">
-              <h3 class="flex flex-col">
+              <h3 class="tournament-title">
                 <span class="h3-title">Tournament Name:</span
                 ><span class="italic">{{ tournament.tournament_name }}</span>
               </h3>
