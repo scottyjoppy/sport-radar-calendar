@@ -15,7 +15,7 @@ const sortedVenues = computed(() => {
 
 const onSubmit = async () => {
   if (!venueName.value.trim()) return;
-  const newVenue = { venue_name: venueName.value.toLowerCase() };
+  const newVenue = { venue_name: venueName.value };
   const result = await addVenues(newVenue);
 
   if (!result.success) {
@@ -36,10 +36,19 @@ const cancelEdit = () => {
   editingId.value = null;
 };
 
+const removeItem = async (id) => {
+  const result = await deleteVenues(id);
+
+  if (!result.success) {
+    alert(`Failed to delete: ${result.error.message}`);
+    return;
+  }
+};
+
 const saveEdit = async (id) => {
   if (!editedName.value.trim()) return;
   const result = await updateVenues(id, {
-    venue_name: editedName.value.toLowerCase(),
+    venue_name: editedName.value,
   });
 
   if (!result.success) {
@@ -114,7 +123,7 @@ const saveEdit = async (id) => {
                 />
               </svg>
             </button>
-            <button @click="deleteVenues(venue.venue_id)" class="form-btn">
+            <button @click="removeItem(venue.venue_id)" class="form-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                 <g data-name="Layer 2">
                   <path
@@ -150,6 +159,13 @@ const saveEdit = async (id) => {
             title
           />
           <button type="submit" class="my-input-submit">Submit</button>
+          <button type="submit" class="add-checkmark">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path
+                d="M480 128c0 8.188-3.125 16.38-9.375 22.62l-256 256C208.4 412.9 200.2 416 192 416s-16.38-3.125-22.62-9.375l-128-128C35.13 272.4 32 264.2 32 256c0-18.28 14.95-32 32-32 8.188 0 16.38 3.125 22.62 9.375L192 338.8l233.4-233.4c6.2-6.27 14.4-9.4 22.6-9.4 17.1 0 32 13.7 32 32z"
+              />
+            </svg>
+          </button>
         </form>
       </div>
       <div

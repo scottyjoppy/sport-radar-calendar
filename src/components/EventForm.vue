@@ -50,6 +50,15 @@ const cancelEdit = () => {
   editingId.value = null;
 };
 
+const removeItem = async (id) => {
+  const result = await deleteEvents(id);
+
+  if (!result.success) {
+    alert(`Failed to delete: ${result.error.message}`);
+    return;
+  }
+};
+
 const startEditing = (event) => {
   editingId.value = event.event_id;
   editedEvent.value = { ...event };
@@ -155,7 +164,7 @@ const saveEdit = async (id) => {
               </div>
               <div class="edit-form-row">
                 <label class="underline">Tournament</label>
-                <select v-model="editedEvent.venue_id" class="form-input">
+                <select v-model="editedEvent.tournament_id" class="form-input">
                   <option value="">No tournament</option>
                   <option
                     v-for="tournament in tournaments"
@@ -298,7 +307,7 @@ const saveEdit = async (id) => {
               </svg>
             </button>
             <template v-if="expandEventsId !== event.event_id">
-              <button @click="deleteEvents(event.event_id)" class="form-btn">
+              <button @click="removeItem(event.event_id)" class="form-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                   <g data-name="Layer 2">
                     <path

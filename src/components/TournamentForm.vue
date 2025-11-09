@@ -42,7 +42,7 @@ const onSubmit = async () => {
     return;
 
   const newTournament = {
-    tournament_name: tournamentName.value.toLowerCase(),
+    tournament_name: tournamentName.value,
     tournament_year: tournamentYear.value,
     sport_id: sportId.value,
   };
@@ -71,6 +71,15 @@ const cancelEdit = () => {
   editingId.value = null;
 };
 
+const removeItem = async (id) => {
+  const result = await deleteTournaments(id);
+
+  if (!result.success) {
+    alert(`Failed to delete: ${result.error.message}`);
+    return;
+  }
+};
+
 const startEditing = (tournament) => {
   editingId.value = tournament.tournament_id;
   editedTournament.value = { ...tournament };
@@ -79,7 +88,7 @@ const startEditing = (tournament) => {
 const saveEdit = async (id) => {
   if (!editedTournament.value.tournament_name.trim()) return;
   const result = await updateTournaments(id, {
-    tournament_name: editedTournament.value.tournament_name.toLowerCase(),
+    tournament_name: editedTournament.value.tournament_name,
     tournament_year: editedTournament.value.tournament_year,
     sport_id: editedTournament.value.sport_id,
   });
@@ -242,7 +251,7 @@ const saveEdit = async (id) => {
             </button>
             <template v-if="expandTournamentsId !== tournament.tournament_id">
               <button
-                @click="deleteTournaments(tournament.tournament_id)"
+                @click="removeItem(tournament.tournament_id)"
                 class="form-btn"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">

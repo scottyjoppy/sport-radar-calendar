@@ -51,9 +51,10 @@ export function useTournaments() {
       .eq("tournament_id", id);
     if (error) {
       console.error("Delete failed:", error);
-      return;
+      return { success: false, error };
     }
     tournaments.value = tournaments.value.filter((e) => e.tournament_id !== id);
+    return { success: true };
   };
 
   onMounted(() => {

@@ -15,7 +15,7 @@ const sortedSports = computed(() => {
 
 const onSubmit = async () => {
   if (!sportName.value.trim()) return;
-  const newSport = { sport_name: sportName.value.toLowerCase() };
+  const newSport = { sport_name: sportName.value };
   const result = await addSports(newSport);
 
   if (!result.success) {
@@ -36,10 +36,19 @@ const cancelEdit = () => {
   editingId.value = null;
 };
 
+const removeItem = async (id) => {
+  const result = await deleteSports(id);
+
+  if (!result.success) {
+    alert(`Failed to delete: ${result.error.message}`);
+    return;
+  }
+};
+
 const saveEdit = async (id) => {
   if (!editedName.value.trim()) return;
   const result = await updateSports(id, {
-    sport_name: editedName.value.toLowerCase(),
+    sport_name: editedName.value,
   });
 
   if (!result.success) {
@@ -114,7 +123,7 @@ const saveEdit = async (id) => {
                 />
               </svg>
             </button>
-            <button @click="deleteSports(sport.sport_id)" class="form-btn">
+            <button @click="removeItem(sport.sport_id)" class="form-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                 <g data-name="Layer 2">
                   <path

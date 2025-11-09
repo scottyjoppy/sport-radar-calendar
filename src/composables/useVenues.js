@@ -48,9 +48,10 @@ export function useVenues() {
     const { error } = await supabase.from("venues").delete().eq("venue_id", id);
     if (error) {
       console.error("Delete failed:", error);
-      return;
+      return { success: false, error };
     }
     venues.value = venues.value.filter((e) => e.venue_id !== id);
+    return { success: true };
   };
 
   onMounted(() => {

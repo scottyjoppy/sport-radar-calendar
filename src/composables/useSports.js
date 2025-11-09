@@ -48,9 +48,10 @@ export function useSports() {
     const { error } = await supabase.from("sports").delete().eq("sport_id", id);
     if (error) {
       console.error("Delete failed:", error);
-      return;
+      return { success: false, error };
     }
     sports.value = sports.value.filter((e) => e.sport_id !== id);
+    return { success: true };
   };
 
   onMounted(() => {

@@ -34,23 +34,24 @@ export function useEvents() {
       .select();
     if (error) {
       console.error("Update failed:", error);
-      return {success: false, error };
+      return { success: false, error };
     }
     if (data && data.length) {
       events.value = events.value
         .filter((e) => e.event_id !== id)
         .concat(data[0]);
     }
-    return { success: true, data: data[0]}
+    return { success: true, data: data[0] };
   };
 
   const deleteEvents = async (id) => {
     const { error } = await supabase.from("events").delete().eq("event_id", id);
     if (error) {
       console.error("Delete failed:", error);
-      return;
+      return { success: false, error };
     }
     events.value = events.value.filter((e) => e.event_id !== id);
+    return { success: true };
   };
 
   onMounted(() => {

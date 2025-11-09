@@ -46,9 +46,10 @@ export function useTeams() {
     const { error } = await supabase.from("teams").delete().eq("team_id", id);
     if (error) {
       console.error("Delete failed:", error);
-      return;
+      return { success: false, error };
     }
     teams.value = teams.value.filter((e) => e.team_id !== id);
+    return { success: true };
   };
 
   onMounted(() => {

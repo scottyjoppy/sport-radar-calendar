@@ -34,10 +34,10 @@ const onSubmit = async () => {
     return;
 
   const newTeam = {
-    team_name: teamName.value.toLowerCase(),
+    team_name: teamName.value,
     official_name: officialName.value,
-    country_code: countryCode.value.toUpperCase(),
-    abbreviation: abbreviation.value.toUpperCase(),
+    country_code: countryCode.value,
+    abbreviation: abbreviation.value,
   };
 
   const result = await addTeams(newTeam);
@@ -63,6 +63,15 @@ const cancelEdit = () => {
   editingId.value = null;
 };
 
+const removeItem = async (id) => {
+  const result = await deleteTeams(id);
+
+  if (!result.success) {
+    alert(`Failed to delete: ${result.error.message}`);
+    return;
+  }
+};
+
 const startEditing = (team) => {
   editingId.value = team.team_id;
   editedTeam.value = { ...team };
@@ -71,10 +80,10 @@ const startEditing = (team) => {
 const saveEdit = async (id) => {
   if (!editedTeam.value.team_name.trim()) return;
   const result = await updateTeams(id, {
-    team_name: editedTeam.value.team_name.toLowerCase(),
+    team_name: editedTeam.value.team_name,
     official_name: editedTeam.value.official_name,
-    country_code: editedTeam.value.country_code.toUpperCase(),
-    abbreviation: editedTeam.value.abbreviation.toUpperCase(),
+    country_code: editedTeam.value.country_code,
+    abbreviation: editedTeam.value.abbreviation,
   });
 
   if (!result.success) {
@@ -228,7 +237,7 @@ const saveEdit = async (id) => {
               </svg>
             </button>
             <template v-if="expandTeamsId !== team.team_id">
-              <button @click="deleteTeams(team.team_id)" class="form-btn">
+              <button @click="removeItem(team.team_id)" class="form-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                   <g data-name="Layer 2">
                     <path
@@ -303,11 +312,11 @@ const saveEdit = async (id) => {
               maxlength="3"
               placeholder="Country Code"
               required
-              />
-            </div>
-            <div class="form-container-large-row">
-              <label>Abbreviation</label>
-              <input
+            />
+          </div>
+          <div class="form-container-large-row">
+            <label>Abbreviation</label>
+            <input
               type="text"
               v-model="abbreviation"
               class="my-input-large"
