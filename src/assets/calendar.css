@@ -232,7 +232,9 @@
 }
 
 .popup-events {
-  position: absolute;
+  position: fixed;
+  right: 50%;
+  top: 50%;
   inset: 0;
   margin: auto;
   display: flex;

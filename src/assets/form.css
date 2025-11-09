@@ -433,14 +433,42 @@ h3 {
   flex-direction: column;
 }
 
+.add-checkmark {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   .items-row {
     width: 100%;
     max-width: 30rem;
   }
+
+  .my-input-submit {
+    display: none;
+  }
+
+  .add-checkmark {
+    display: block;
+    height: 100%;
+    width: 100%;
+    fill: var(--off-white);
+  }
+  
+  .add-checkmark svg {
+    transition: all 100ms;
+    height: 1.5rem;
+  }
+
+  .add-checkmark:hover {
+    fill: var(--primary-lighter);
+    cursor: pointer;
+  }
+
+  .add-checkmark:hover svg {
+    rotate: 5deg;
+  }
 }
 @media (max-width: 768px) {
-
   .data-container {
     display: grid;
     grid-template-columns: 1fr;
