@@ -34,10 +34,6 @@
   width: auto;
 }
 
-/* Phones and up */
-@media (max-width: 640px) {
-}
-
 @media (max-width: 768px) {
   .nav-link-container {
     display: none;
@@ -51,8 +47,7 @@
     align-items: end;
     padding: 1rem;
     border-bottom-left-radius: 4px;
-    border-left: 1px solid var(--grey);
-    border-bottom: 1px solid var(--grey);
+    z-index: 10;
   }
 
   .nav-link-container.expand-nav {
@@ -88,5 +83,3 @@
     rotate: 5deg;
   }
 }
-
-

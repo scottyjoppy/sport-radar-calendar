@@ -107,6 +107,7 @@ onMounted(() => {
 
 watch(selectedDay, (newDay) => {
   selectedDayEvents.value = eventsForDay(dayToUTCDay(newDay));
+  localDate.value = new Date(newDay);
 });
 
 onBeforeUnmount(() => {
@@ -132,13 +133,21 @@ onBeforeUnmount(() => {
         </div>
         <div class="top-btn-container">
           <button @click="downMonth" class="selector-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 48 48"
+              class="rotate-90"
+            >
               <path d="M33.17 17.17 24 26.34l-9.17-9.17L12 20l12 12 12-12z" />
               <path d="M0 0h48v48H0z" fill="none" />
             </svg>
           </button>
           <button @click="upMonth" class="selector-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 48 48"
+              class="-rotate-90"
+            >
               <path d="M33.17 17.17 24 26.34l-9.17-9.17L12 20l12 12 12-12z" />
               <path d="M0 0h48v48H0z" fill="none" />
             </svg>
@@ -147,27 +156,27 @@ onBeforeUnmount(() => {
       </div>
       <!-- Side Bar Body -->
       <div class="side-bar-container">
-        <div
-          v-if="events.length"
-          v-for="(event, i) in selectedDayEvents"
-          :key="i"
-          class="event-row"
-          @click.stop="showDetails(event.event_id)"
-        >
-          <h3 class="flex gap-2">
-            <span class="capitalize">
-              {{ getTeamAbbr(event.home_team) }}
-            </span>
-            <span class="lowercase">vs</span>
-            <span class="capitalize">
-              {{ getTeamAbbr(event.away_team) }}
-            </span>
-            <span>
-              {{ event.event_day }}
-            </span>
-          </h3>
+        <template v-if="selectedDayEvents.length">
+          <div
+            v-for="(event, i) in selectedDayEvents"
+            :key="i"
+            class="event-row"
+            @click.stop="showDetails(event.event_id)"
+          >
+            <h3 class="flex gap-2">
+              <span class="capitalize">{{ getTeamAbbr(event.home_team) }}</span>
+              <span class="lowercase">vs</span>
+              <span class="capitalize">{{ getTeamAbbr(event.away_team) }}</span>
+              <span>{{ event.event_day }}</span>
+            </h3>
+          </div>
+        </template>
+
+        <div v-else class="event-row-empty">
+          <h3>No Events!</h3>
         </div>
       </div>
+
       <!-- Side Bar Bottom -->
       <div class="btn-container">
         <button @click="flipStart">
@@ -222,7 +231,53 @@ onBeforeUnmount(() => {
         <button class="popup-btn" @click="showDetails(null)">Close</button>
       </div>
     </template>
-
+    <!-- Mobile Copy Side Bar Top -->
+    <div class="side-bar-top-container-mobile">
+      <div class="current-day-container">
+        <div class="uppercase font-bold">
+          {{ MONTHS[selectedDay.getMonth()] }}
+        </div>
+        <div>{{ selectedDay.getDate() }}</div>
+        <div>{{ selectedDay.getFullYear() }}</div>
+      </div>
+      <div class="top-btn-container">
+        <div class="btn-container">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="switch-btn"
+            @click="flipStart"
+          >
+            <path
+              d="M8 7h12m0 0-4-4m4 4-4 4m0 6H4m0 0 4 4m-4-4 4-4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+        </div>
+        <button @click="downMonth" class="selector-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            class="rotate-90"
+          >
+            <path d="M33.17 17.17 24 26.34l-9.17-9.17L12 20l12 12 12-12z" />
+            <path d="M0 0h48v48H0z" fill="none" />
+          </svg>
+        </button>
+        <button @click="upMonth" class="selector-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 48 48"
+            class="-rotate-90"
+          >
+            <path d="M33.17 17.17 24 26.34l-9.17-9.17L12 20l12 12 12-12z" />
+            <path d="M0 0h48v48H0z" fill="none" />
+          </svg>
+        </button>
+      </div>
+    </div>
     <!-- Main Calendar -->
     <section class="flex justify-center">
       <div
@@ -256,6 +311,29 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </section>
+    <div class="side-bar-container-mobile">
+      <template v-if="selectedDayEvents.length">
+        <div
+          v-for="(event, i) in selectedDayEvents"
+          :key="i"
+          class="event-row"
+          @click.stop="showDetails(event.event_id)"
+        >
+          <h3 class="flex gap-2">
+            <span class="capitalize">{{ getTeamAbbr(event.home_team) }}</span>
+            <span class="lowercase">vs</span>
+            <span class="capitalize">{{ getTeamAbbr(event.away_team) }}</span>
+            <span>{{ event.event_day }}</span>
+          </h3>
+        </div>
+      </template>
+
+      <div v-else class="event-row-empty">
+        <h3>No Events!</h3>
+      </div>
+    </div>
+
+    <!-- Side Bar Bottom -->
   </div>
   <AddEventForm></AddEventForm>
 </template>
