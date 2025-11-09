@@ -1,9 +1,31 @@
 <script setup></script>
 
+<style>
+.my-button {
+  --p: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  fill: var(--off-white);
+  color: var(--off-white);
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(var(--secondary) 0 0) calc(100% - var(--p, 0%)) /
+    var(--p, 0%) no-repeat;
+  transition: 0.4s, background-position 0s;
+  outline: none;
+}
+
+.my-button:hover {
+  --p: 0%;
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
+  fill: var(--secondary);
+}
+</style>
+
 <template>
-  <button
-    class="my-button py-3"
-  >
+  <button class="my-button py-3">
     <slot />
     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14">
       <path
