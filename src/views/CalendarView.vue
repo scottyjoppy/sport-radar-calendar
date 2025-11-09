@@ -3,5 +3,7 @@ import Calendar from "@/components/Calendar.vue";
 </script>
 
 <template>
-  <Calendar></Calendar>
+  <div class="overflow-x-scroll">
+    <Calendar></Calendar>
+  </div>
 </template>
