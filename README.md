@@ -49,3 +49,7 @@ npm run dev
 ## Relational Diagram
 
 ![Relational Diagram](/public/er_diagram.png)
+
+### PS
+
+\**Environment variables are included solely for the purpose of submission, normally these would remain hidden*\*
