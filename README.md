@@ -44,6 +44,7 @@ npm run dev
   - Missing required values
 - Calendar grid expands or contracts based on the amount of rows needed.
 - Calendar displays valid days per month including leap years.
+- App tested on multiple browsers
 
 ## Relational Diagram
 

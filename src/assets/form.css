@@ -226,7 +226,7 @@ h3 {
 }
 
 .my-input::placeholder {
-  font-style: italic;
+  color: var(--primary);
 }
 
 .my-input-submit {
@@ -403,10 +403,10 @@ h3 {
   outline: none;
   padding: 4px 8px;
   border-radius: 4px;
+  max-width: 60%;
 }
 
 .my-input-large::placeholder {
-  font-style: italic;
   color: var(--primary);
 }
 

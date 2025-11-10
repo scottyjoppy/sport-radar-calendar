@@ -1,4 +1,3 @@
-import { useEvents } from "@/composables/useEvents";
 import { useSports } from "@/composables/useSports";
 import { useTeams } from "@/composables/useTeams";
 import { useTournaments } from "@/composables/useTournaments";
@@ -7,7 +6,6 @@ import { useVenues } from "@/composables/useVenues";
 const { sports } = useSports();
 const { teams } = useTeams();
 const { venues } = useVenues();
-const { events } = useEvents();
 const { tournaments } = useTournaments();
 
 export function getSportName(id) {

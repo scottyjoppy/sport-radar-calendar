@@ -25,7 +25,7 @@ const editedTournament = ref({
 const yearRange = computed(() => {
   const currentYear = new Date().getFullYear();
   const range = [];
-  for (let i = currentYear - 100; i <= currentYear + 100; i++) {
+  for (let i = currentYear; i >= currentYear - 50; i--) {
     range.push(i);
   }
   return range;
@@ -312,6 +312,7 @@ const saveEdit = async (id) => {
           <div class="form-container-large-row">
             <label>Year</label>
             <select v-model="tournamentYear" class="my-input-large" required>
+              <option disabled value="">yyyy</option>
               <option v-for="y in yearRange" :key="y" :value="y">
                 {{ y }}
               </option>
