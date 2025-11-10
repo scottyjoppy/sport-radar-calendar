@@ -1,0 +1,54 @@
+AI Reflection
+
+I'd like to preface my AI reflection by first stating my core thoughts on AI.
+
+1. AI is best used as a fancy auto-complete that allows someone to express an idea quickly.
+2. AI is badly used when it is to avoid learning instead of promoting it.
+3. Always doubt what it generates.
+
+Due to the time restrictions and ambition on my end to create a good-looking, efficient, and complete project, AI was mostly used for point 1, a fancy auto-complete. There's a world of decisions that I've made before typing any prompts. For example, the choice in framework, whether or not I needed dynamic typing, how I would handle storage, file structure, etc. These are all choices in the problem-solving process that I've made on my own. These were made for a few reasons: familiarity in a given language or framework, style preferences, and overall confidence in what is achievable in our given amount of time. 
+
+I'll expand on which solutions were directly written by me first. 
+
+1. Consistent Colors: I find it important to define root colors in main.css and reference it everywhere as var(--color). This way I can create an initial palette and stick to it throughout the web app. This means keeping these colors everywhere, the borders, backgrounds, font colors...
+
+2. HTML Structure: Because I had a large emphasis on style during this project, I made sure to provide plenty of opportunity to wrap elements in container divs, knowing that they will be useful later on. Additionally I also ensured to write as consistently structured forms and page views as I could.
+
+3. Data Structure: The schema I finished with was a result of a very deliberate dissection of the provided JSON by Sport Radar. I spent quite some time defining the different tables' relations and types for each column to best represent the spirit of the assignment.
+
+4. CSS Styles: As this is a front-end assignment, I'm proud to say that all the CSS was done by myself. There were questions posed to AI to understand things like the :nth-child better, but everything was done by me and my basic knowledge of CSS. I also needed to do it all myself because unlike the LLM, I had the overall view and idea for the style of the website. So everything down to the px or rem size was kept consistent by my own hand.
+
+Now I will write about things made WITH an LLM, meaning I didn't know exactly how to do something on my own, so I got help.
+
+1. Translating Vue: I've only ever used React for web development. So in a lot of cases I needed to understand how something React-y is done in Vue. I had to learn how routing works, how states in React are now Refs in Vue, how to add event listeners, forms, etc. All things I know in React or vanilla JS, but not yet in Vue. I would also often write some code and ask an AI if there's a more Vue-y way of doing it, since I didn't know a lot of these things yet.
+
+2. JavaScript Dates: I gave my calendar the ability to move through multiple months and display the correct dates with the correct days. To achieve this I had a real collaboration between me, ChatGPT, and the docs. I sometimes will write like this: I first just code vomit onto the file to get a point across, then I'll review why it of course is erroring out, fix it until it works, and then check with an LLM if there was a more efficient way of writing it. From that generation I can pick and choose what concepts I'd like to keep or not but ultimately it's just a way for me to clarify my thoughts. So with the help of AI I was able to make the dates super dynamic ~ as far as the JS Date object will allow.
+
+3. CRUD Operations: More than anything AI was used here to clarify some syntax and auto complete for me. I've used Supabase before so I'm already familiar with how to call on it, but AI was super useful here in terms of making the functions more clean and efficient, as well as reminding me of the syntax.
+
+4. General Debugging: While yes, AI helped catch stupid mistakes, like forgetting the .value next to a Vue ref variable. However, it wasn't super helpful with the larger issues (even sometimes the smaller issues were too much). Because I knew that in most cases I would be better off retracing my steps and finding the error myself than relying on an LLM with a limited view of my project. But nonetheless, it was sometimes helpful to catch simple errors, or clear conceptual errors of thinking.
+
+Here are a few more decisions and reasonings:
+
+- Single form.css instead of multiple: To provide consistent stylings and speed up the creation of multiple "similar looking" data displaying pages.
+- "Off" Colors: This was more a personal preference but I don't like such extremes as #FFFFFF or #000000 so I always set some offsets of those colors, also in hopes of not burning people's retinas or monitors.
+- SVGs instead of images: Mainly because of familiarity but also because I'm trying to limit the amount of files the interviewer will have to clone, images weren't necessary.
+- Vue instead of React: Honestly I just wanted the challenge, as well, I heard Sport Radar uses Vue and I've been looking for an excuse to check it out. I think I'll be continuing to use it from now on.
+- Calendar design: While heavily inspired from Google Calendar, I was also very diligent to make sure things work on mobile. Meaning I tried to style things to withstand various zooming, screen sizes, browsers, and devices.
+- Mobile Friendly: This is more in regards to things like button sizes, but I made sure that the user could use the calendar without too much trouble with a phone. Among other things like how clicking out of the mobile navbar just seems more natural than clicking the x (but of course I still put the x for the style).
+- Omitting info from the JSON: As you may have noticed I definitely did not include all the data from the provided JSON. Some was just redundant given the scope of my project, but I had to decide what I needed and what I actually had time to include.
+
+On to the final question, what would I have included if I had more time, well, a lot.
+
+- Filtering, or some search bars to look for specific events
+- Better error control, instead of the overhead "Alerts" I'm currently using
+- Individual team pages - but then I would also need to include more of the JSON's data such as results, penalties, messages...
+- Player pages
+- More icons
+- More animations
+
+The list goes on and on. The important thing, and something I continuously have to remind myself, is that at the end of the day, it's more important to meet the requirements. This is just a draft one, now it's time to get feedback and improve, perfection won't come on the first try.
+
+In conclusion this project has been a blast. AI was a great tool for prototyping, debugging, and asking questions to. As a self-taught programmer, AI has been an amazing resource, and it is in leveraging this resource that modern programmers can see a significant boost in productivity.
+
+**Disclaimer** AI was not used to write this reflection.
