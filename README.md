@@ -52,5 +52,6 @@ npm run dev
 
 ### PS
 
-\** Environment variables are included solely for the purpose of submission, normally these would remain hidden *\*
-\** Additionally, database security has been limited to SELECT until time of interview *\*
+\* *Environment variables are included solely for the purpose of submission, normally these would remain hidden* \*
+
+\* *Additionally, database security has been limited to SELECT until time of interview* \*
